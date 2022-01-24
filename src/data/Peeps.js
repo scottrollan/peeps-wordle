@@ -1,0 +1,15 @@
+export const peeps = [
+  { name: 'Sharon' },
+  { name: 'Ralph' },
+  { name: 'Pierrette' },
+  { name: 'Lucius' },
+  { name: 'Kim' },
+  { name: 'Julie' },
+  { name: 'Jerry' },
+  { name: 'Jeff' },
+  { name: 'Jason' },
+  { name: 'Becky' },
+  { name: 'Barry' },
+  { name: 'Adrienne' },
+  { name: 'Adrean' },
+];

@@ -1,0 +1,40 @@
+.app {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.header {
+  width: 100%;
+  max-width: 550px;
+  height: 11vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 2px solid black;
+}
+
+.logo {
+  pointer-events: none;
+  height: 10vh;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+// @media (prefers-reduced-motion: no-preference) {
+//   .logo {
+//     animation: App-logo-spin infinite 20s linear;
+//   }
+// }
+
+// @keyframes App-logo-spin {
+//   from {
+//     transform: rotate(0deg);
+//   }
+//   to {
+//     transform: rotate(360deg);
+//   }
+// }

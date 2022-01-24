@@ -1,23 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import UserLogin from './components/UserLogin';
+import GameBoard from './components/GameBoard';
+import { peeps } from './data/Peeps';
+import { randomWord } from './data/Words';
+import { Button } from 'react-bootstrap';
+
+import logo from './assets/pwLogo.png';
+import styles from './App.module.scss';
 
 function App() {
+  const [userModalShow, setUserModalShow] = useState(true);
+  const [peep, setPeep] = useState('');
+
+  const getRandomWord = () => {
+    const secretWord = randomWord();
+    console.log(secretWord);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={styles.app}>
+      <UserLogin
+        show={userModalShow}
+        setShow={setUserModalShow}
+        peeps={peeps}
+        peep={peep}
+        setPeep={setPeep}
+      />
+      <div className={styles.header}>
+        <img src={logo} className={styles.logo} alt="logo" />
+        <h3>Peeps Wordle</h3>
+      </div>
+      <GameBoard />
     </div>
   );
 }
