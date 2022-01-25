@@ -18,7 +18,8 @@
 .button,
 .button:hover,
 .button:active,
-.button:focus {
+.button:focus,
+.button:visited {
   height: 56px;
   min-width: 42px;
   margin-top: 5px;
@@ -26,6 +27,7 @@
   text-align: center;
   background-color: var(--light-gray);
   border: none;
+  outline: none;
   font-weight: 600;
   @media screen and (max-width: $breakpoint-small) {
     min-width: fit-content;

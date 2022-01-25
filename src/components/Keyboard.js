@@ -1,30 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import styles from './Keyboard.module.scss';
 
-export default function Keyboard() {
+export default function Keyboard({
+  guesses,
+  setGuesses,
+  guessIndex,
+  setGuessIndex,
+  letterIndex,
+  setLetterIndex,
+}) {
   const topRow = [
-    { val: 'q' },
-    { val: 'w' },
-    { val: 'e' },
-    { val: 'r' },
-    { val: 't' },
-    { val: 'y' },
-    { val: 'u' },
-    { val: 'i' },
-    { val: 'o' },
-    { val: 'p' },
+    { val: 'q', code: 'KeyQ' },
+    { val: 'w', code: 'Keyw' },
+    { val: 'e', code: 'KeyE' },
+    { val: 'r', code: 'KeyR' },
+    { val: 't', code: 'KeyT' },
+    { val: 'y', code: 'KeyY' },
+    { val: 'u', code: 'KeyU' },
+    { val: 'i', code: 'KeyI' },
+    { val: 'o', code: 'KeyO' },
+    { val: 'p', code: 'KeyP' },
   ];
   const middleRow = [
-    { val: 'a' },
-    { val: 's' },
-    { val: 'd' },
-    { val: 'f' },
-    { val: 'g' },
-    { val: 'h' },
-    { val: 'j' },
-    { val: 'k' },
-    { val: 'l' },
+    { val: 'a', code: 'KeyA' },
+    { val: 's', code: 'KeyS' },
+    { val: 'd', code: 'KeyD' },
+    { val: 'f', code: 'KeyF' },
+    { val: 'g', code: 'KeyG' },
+    { val: 'h', code: 'KeyH' },
+    { val: 'j', code: 'KeyJ' },
+    { val: 'k', code: 'KeyK' },
+    { val: 'l', code: 'KeyL' },
   ];
   const bottomRow = [
     {
@@ -34,19 +41,36 @@ export default function Keyboard() {
           ENTER
         </span>
       ),
+      code: 'Enter',
     },
-    { val: 'z' },
-    { val: 'x' },
-    { val: 'c' },
-    { val: 'v' },
-    { val: 'b' },
-    { val: 'n' },
-    { val: 'm' },
+    { val: 'z', code: 'KeyZ' },
+    { val: 'x', code: 'KeyX' },
+    { val: 'c', code: 'KeyC' },
+    { val: 'v', code: 'KeyV' },
+    { val: 'b', code: 'KeyB' },
+    { val: 'n', code: 'KeyN' },
+    { val: 'm', code: 'KeyM' },
     {
       val: 'backspace',
       html: <i className="far fa-backspace" style={{ padding: '0' }}></i>,
+      code: 'Backspace',
     },
   ];
+
+  const handleChange = (target, code) => {
+    let allGuesses = [...guesses];
+    const guessAtCurrentIndex = guesses[guessIndex];
+    let currentGuess = [...guessAtCurrentIndex];
+    if (code === 'Backspace' && currentGuess.length) {
+      newGuess.pop();
+    } else {
+      currentGuess.push(target.value);
+    }
+    allGuesses[thisGuessIndex] = [...newGuess];
+    console.log(allGuesses);
+    setGuesses([...allGuesses]);
+  };
+
   return (
     <div className={styles.keyboad}>
       <div className={styles.keyboardRow}>
@@ -56,6 +80,7 @@ export default function Keyboard() {
               key={`${btn.vla}${idx}`}
               value={btn.val}
               className={styles.button}
+              onClick={(e) => handleChange(e.target, btn.code)}
             >
               {btn.val}
             </Button>
@@ -69,6 +94,7 @@ export default function Keyboard() {
               key={`${btn.val}${idx}`}
               value={btn.val}
               className={styles.button}
+              onClick={(e) => handleChange(e.target, btn.code)}
             >
               {btn.val}
             </Button>
@@ -82,6 +108,7 @@ export default function Keyboard() {
               key={`${btn.val}${idx}`}
               value={btn.val}
               className={styles.button}
+              onClick={(e) => handleChange(e.target, btn.code)}
             >
               {btn.html ? btn.html : btn.val}
             </Button>

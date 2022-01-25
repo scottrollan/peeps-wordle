@@ -65,7 +65,12 @@ function App() {
         <img src={logo} className={styles.logo} alt="logo" />
         <h3>Peeps Wordle</h3>
       </div>
-      <GameBoard guesses={guesses} setGuesses={setGuesses} />
+      <GameBoard
+        guesses={guesses}
+        setGuesses={setGuesses}
+        guessNumber={guessNumber}
+        setGuessNumber={setGuessNumber}
+      />
       <Button onClick={() => getRandomWord()}>CLICK TO TEST</Button>
       <Button onClick={() => makeGuess('giant')}>Make Guess</Button>
     </div>

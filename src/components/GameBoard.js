@@ -4,7 +4,10 @@ import { Form, Button } from 'react-bootstrap';
 import styles from './GameBoard.module.scss';
 
 export default function GameBoard({ guesses, setGuesses }) {
-  const [currentGuess, setCurrentGuess] = useState(1);
+  const [currentGuess, setCurrentGuess] = useState({
+    guess: 0,
+    letters: ['', '', '', '', ''],
+  });
   const submitGuess = (num) => {
     console.log(`Guess #${num} was just submitted!`);
   };
@@ -131,7 +134,12 @@ export default function GameBoard({ guesses, setGuesses }) {
           );
         })}
       </div>
-      <Keyboard />
+      <Keyboard
+        currentGuess={currentGuess}
+        setCurrentGuess={setCurrentGuess}
+        guesses={guesses}
+        setGuesses={setGuesses}
+      />
     </>
   );
 }
