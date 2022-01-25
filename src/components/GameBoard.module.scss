@@ -1,5 +1,97 @@
+@import '../styles/custom-properties.module.scss';
+
+.board {
+  height: $boardWH;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-bottom: 1vh;
+  @media screen and (max-height: $breakpoint-height) {
+    height: $breakpointBoardWH;
+  }
+}
 .guessLine {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
+  width: 100%;
+  max-width: $boardWH;
+}
+.guessLetter,
+.guessLetter:focus,
+.guessLetter:active {
+  width: $inputWH;
+  height: $inputWH;
+  text-align: center;
+  box-shadow: none;
+  border: 1px solid var(--light-gray);
+  border-radius: 0;
+  font-size: $fontSize;
+  font-weight: 700;
+  padding: 0;
+  @media screen and (max-height: $breakpoint-height) {
+    width: $breakpointInputWH;
+    height: $breakpointInputWH;
+  }
+}
+
+.backLetter {
+  -webkit-transform: rotateX(180deg);
+  transform: rotateX(180deg);
+  font-size: $fontSize;
+  font-weight: 700;
+  @media screen and (max-height: $breakpoint-height) {
+    width: $breakpointInputWH;
+    height: $breakpointInputWH;
+  }
+}
+
+.flipbox {
+  background-color: transparent;
+  width: $inputWH;
+  height: $inputWH;
+  margin: 3px;
+  perspective: 1000px; /* Remove this if you don't want the 3D effect */
+  transition: transform 0.8s;
+}
+
+/* This container is needed to position the front and back side */
+.flipboxInner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+/* Do an horizontal flip when you move the mouse over the flip box container */
+// .flipbox:hover .flipboxInner {
+//   transform: rotateX(180deg);
+// }
+
+/* Position the front and back side */
+.flipboxFront,
+.flipboxBack {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
+}
+
+/* Style the front side (fallback if image is missing) */
+.flipboxFront {
+  background-color: var(--dark-gray);
+  color: var(--white);
+}
+
+/* Style the back side */
+.flipboxBack {
+  background-color: var(--dark-gray);
+  color: white;
+  transform: rotateX(180deg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

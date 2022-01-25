@@ -1,0 +1,34 @@
+@import '../styles/custom-properties.module.scss';
+
+.keyboard {
+  width: 100vw;
+  padding: 1vh 1vw;
+  display: flex;
+  flex-direction: column;
+}
+
+.keyboardRow {
+  width: 98vw;
+  max-width: 482px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.button,
+.button:hover,
+.button:active,
+.button:focus {
+  height: 56px;
+  min-width: 42px;
+  margin-top: 5px;
+  text-transform: uppercase;
+  text-align: center;
+  background-color: var(--light-gray);
+  border: none;
+  font-weight: 600;
+  @media screen and (max-width: $breakpoint-small) {
+    min-width: fit-content;
+    font-size: small;
+  }
+}

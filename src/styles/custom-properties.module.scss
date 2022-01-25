@@ -1,0 +1,21 @@
+///Breakpoints for screen width
+$breakpoint-small: 688px;
+$breakpoint-medium: 992px;
+$breakpoint-large: 1312px;
+$breakpoint-extra-large: 1600px;
+
+//Variables for components
+$breakpoint-num: 670;
+$breakpoint-height: $breakpoint-num + px;
+$boardWH: 330px;
+$breakpointBoardWH: calc(35vh + 30px);
+$inputWH: 60px;
+$breakpointInputWH: 7vh;
+$fontSize: 4vh;
+
+:root {
+  --puke-yellow: #c9b458;
+  --green: #6aaa64;
+  --light-gray: #d3d6da;
+  --dark-gray: #787c7e;
+}

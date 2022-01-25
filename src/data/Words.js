@@ -1019,6 +1019,7 @@ export const words = [
   'knees',
   'knife',
   'knock',
+  'knoll',
   'knots',
   'known',
   'knows',
