@@ -7,7 +7,8 @@ $breakpoint-extra-large: 1600px;
 //Variables for components
 $breakpoint-num: 670;
 $breakpoint-height: $breakpoint-num + px;
-$boardWH: 330px;
+$boardWidth: 330px;
+$boardHeight: 400px;
 $breakpointBoardWH: calc(35vh + 30px);
 $inputWH: 60px;
 $breakpointInputWH: 7vh;

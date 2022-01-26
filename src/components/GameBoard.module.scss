@@ -1,7 +1,7 @@
 @import '../styles/custom-properties.module.scss';
 
 .board {
-  height: $boardWH;
+  height: $boardHeight;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -15,7 +15,7 @@
   flex-direction: row;
   justify-content: space-around;
   width: 100%;
-  max-width: $boardWH;
+  max-width: $boardWidth;
 }
 .guessLetter {
   width: $inputWH;

@@ -1,6 +1,5 @@
 import React from 'react';
 import Keyboard from './Keyboard';
-import './GameBoard.css';
 import styles from './GameBoard.module.scss';
 
 export default function GameBoard({
@@ -12,7 +11,7 @@ export default function GameBoard({
   return (
     <>
       <div className={styles.board}>
-        {[0, 1, 2, 3, 4].map((num, idx) => {
+        {[0, 1, 2, 3, 4, 5].map((num, idx) => {
           return (
             <div
               key={`${idx}${num}`}
