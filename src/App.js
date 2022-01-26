@@ -6,6 +6,8 @@ import { randomWord } from './data/Words';
 import logo from './assets/pwLogo.png';
 import styles from './App.module.scss';
 
+const axios = require('axios');
+
 function App() {
   const [answer, setAnswer] = useState('');
   const [guessIndex, setGuessIndex] = useState(0);
@@ -22,24 +24,30 @@ function App() {
 
   const makeGuess = (playerGuess) => {
     //check if in dictionary
-    fetch(
-      `https://dictionaryapi.com/api/v3/references/collegiate/json/${playerGuess}?key=${REACT_APP_MW_KEY}`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        if (data[0].meta) {
+    const config = {
+      method: 'get',
+      url: `https://dictionaryapi.com/api/v3/references/collegiate/json/${playerGuess}?key=${REACT_APP_MW_KEY}`,
+    };
+
+    let data;
+    axios(config)
+      .then((response) => {
+        data = JSON.stringify(response.data);
+      })
+      .then(() => {
+        console.log(data);
+        if (data !== []) {
           let elements = window.document.getElementsByClassName(
             `flippableG${guessIndex}`
           );
-          console.log(elements.length);
           for (let i = 0; i < elements.length; i++) {
             elements[i].setAttribute('style', 'transform: rotateY(180deg);');
           }
           // for (let i = 0; i < elements.length; i++) {
           //   elements[i].a('style', '-webkit-transform: rotateY(180deg);');
           // }
-          // let plusOne = guessIndex + 1;
-          // setGuessIndex(plusOne);
+          let plusOne = guessIndex + 1;
+          setGuessIndex(plusOne);
         } else {
           console.log(`${playerGuess} was not in the dictionary`);
           //trigger a "not a word" effect in GameBoard
