@@ -31,11 +31,15 @@ function App() {
           let elements = window.document.getElementsByClassName(
             `flippableG${guessIndex}`
           );
+          console.log(elements.length);
           for (let i = 0; i < elements.length; i++) {
-            elements[i].a('style', 'transform: rotateY(180deg);');
+            elements[i].setAttribute('style', 'transform: rotateY(180deg);');
           }
-          let plusOne = guessIndex + 1;
-          setGuessIndex(plusOne);
+          // for (let i = 0; i < elements.length; i++) {
+          //   elements[i].a('style', '-webkit-transform: rotateY(180deg);');
+          // }
+          // let plusOne = guessIndex + 1;
+          // setGuessIndex(plusOne);
         } else {
           console.log(`${playerGuess} was not in the dictionary`);
           //trigger a "not a word" effect in GameBoard

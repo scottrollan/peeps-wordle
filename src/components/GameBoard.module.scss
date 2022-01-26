@@ -36,8 +36,8 @@
 }
 
 .backLetter {
-  -webkit-transform: rotateX(180deg);
-  transform: rotateX(180deg);
+  -webkit-transform: rotateY(180deg);
+  transform: rotateY(180deg);
   font-size: $fontSize;
   font-weight: 700;
   @media screen and (max-height: $breakpoint-height) {
@@ -67,7 +67,7 @@
 
 /* Do an horizontal flip when you move the mouse over the flip box container */
 // .flipbox:hover .flipboxInner {
-//   transform: rotateX(180deg);
+//   transform: rotateY(180deg);
 // }
 
 /* Position the front and back side */
@@ -90,7 +90,7 @@
 .flipboxBack {
   background-color: var(--dark-gray);
   color: white;
-  transform: rotateX(180deg);
+  transform: rotateY(180deg);
   display: flex;
   justify-content: center;
   align-items: center;
