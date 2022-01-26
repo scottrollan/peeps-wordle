@@ -10,7 +10,7 @@ export default function Keyboard({
 }) {
   const topRow = [
     { val: 'q', code: 'KeyQ' },
-    { val: 'w', code: 'Keyw' },
+    { val: 'w', code: 'KeyW' },
     { val: 'e', code: 'KeyE' },
     { val: 'r', code: 'KeyR' },
     { val: 't', code: 'KeyT' },
@@ -81,8 +81,9 @@ export default function Keyboard({
         {topRow.map((btn, idx) => {
           return (
             <Button
-              key={`${btn.vla}${idx}`}
+              key={`${btn.val}${idx}`}
               value={btn.val}
+              id={btn.code}
               className={styles.button}
               onClick={(e) => handleChange(e.target, btn.code)}
             >
@@ -97,6 +98,7 @@ export default function Keyboard({
             <Button
               key={`${btn.val}${idx}`}
               value={btn.val}
+              id={btn.code}
               className={styles.button}
               onClick={(e) => handleChange(e.target, btn.code)}
             >
@@ -111,6 +113,7 @@ export default function Keyboard({
             <Button
               key={`${btn.val}${idx}`}
               value={btn.val}
+              id={btn.code}
               className={styles.button}
               onClick={(e) => handleChange(e.target, btn.code)}
             >

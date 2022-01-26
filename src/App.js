@@ -3,6 +3,7 @@ import UserLogin from './components/UserLogin';
 import GameBoard from './components/GameBoard';
 import { peeps } from './data/Peeps';
 import { randomWord } from './data/Words';
+import { isAWord, isNotAWord } from './functions/index';
 import logo from './assets/pwLogo.png';
 import styles from './App.module.scss';
 
@@ -32,33 +33,15 @@ function App() {
     let data;
     axios(config)
       .then((response) => {
-        data = JSON.stringify(response.data);
+        data = response.data[0];
       })
       .then(() => {
-        console.log(data);
-        if (data !== []) {
-          let elements = window.document.getElementsByClassName(
-            `flippableG${guessIndex}`
-          );
-          for (let i = 0; i < elements.length; i++) {
-            elements[i].setAttribute('style', 'transform: rotateY(180deg);');
-          }
-          // for (let i = 0; i < elements.length; i++) {
-          //   elements[i].a('style', '-webkit-transform: rotateY(180deg);');
-          // }
+        if (typeof data === 'object') {
+          isAWord(playerGuess, answer, guessIndex);
           let plusOne = guessIndex + 1;
           setGuessIndex(plusOne);
         } else {
-          console.log(`${playerGuess} was not in the dictionary`);
-          //trigger a "not a word" effect in GameBoard
-          let elements = window.document.getElementsByClassName(
-            `shakeableG${guessIndex}`
-          );
-          console.log(`Found ${elements.length} shakeable lines`);
-          for (let i = 0; i < elements.length; i++) {
-            elements[i].classList.add('shake');
-            // elements[i].setAttribute('style', 'animation: shake;');
-          }
+          isNotAWord(playerGuess, guessIndex);
         }
       });
   };

@@ -29,6 +29,7 @@
   border: none;
   outline: none;
   font-weight: 600;
+  color: black;
   @media screen and (max-width: $breakpoint-small) {
     min-width: fit-content;
     font-size: small;

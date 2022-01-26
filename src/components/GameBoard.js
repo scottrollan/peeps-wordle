@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Keyboard from './Keyboard';
 import './GameBoard.css';
 import styles from './GameBoard.module.scss';
@@ -26,7 +26,7 @@ export default function GameBoard({
                   >
                     {guesses[num][0]}
                   </div>
-                  <div className={styles.flipboxBack}>
+                  <div className={styles.flipboxBack} id={`g${num}l0`}>
                     <span className={styles.backLetter}>{guesses[idx][0]}</span>
                   </div>
                 </div>
@@ -38,7 +38,7 @@ export default function GameBoard({
                   >
                     {guesses[idx][1]}
                   </div>
-                  <div className={styles.flipboxBack}>
+                  <div className={styles.flipboxBack} id={`g${num}l1`}>
                     <span className={styles.backLetter}>{guesses[idx][1]}</span>
                   </div>
                 </div>
@@ -50,7 +50,7 @@ export default function GameBoard({
                   >
                     {guesses[idx][2]}
                   </div>
-                  <div className={styles.flipboxBack}>
+                  <div className={styles.flipboxBack} id={`g${num}l2`}>
                     <span className={styles.backLetter}>{guesses[idx][2]}</span>
                   </div>
                 </div>
@@ -62,7 +62,7 @@ export default function GameBoard({
                   >
                     {guesses[idx][3]}
                   </div>
-                  <div className={styles.flipboxBack}>
+                  <div className={styles.flipboxBack} id={`g${num}l3`}>
                     <span className={styles.backLetter}>{guesses[idx][3]}</span>
                   </div>
                 </div>
@@ -74,7 +74,7 @@ export default function GameBoard({
                   >
                     {guesses[idx][4]}
                   </div>
-                  <div className={styles.flipboxBack}>
+                  <div className={styles.flipboxBack} id={`g${num}l4`}>
                     <span className={styles.backLetter}>{guesses[idx][4]}</span>
                   </div>
                 </div>
