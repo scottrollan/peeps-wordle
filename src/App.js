@@ -1,16 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import UserLogin from './components/UserLogin';
 import GameBoard from './components/GameBoard';
 import { peeps } from './data/Peeps';
 import { randomWord } from './data/Words';
-import { Button } from 'react-bootstrap';
-
 import logo from './assets/pwLogo.png';
 import styles from './App.module.scss';
 
 function App() {
   const [answer, setAnswer] = useState('');
-  const [guessNumber, setGuessNumber] = useState(1);
+  const [guessIndex, setGuessIndex] = useState(0);
   const [guesses, setGuesses] = useState([
     ['', '', '', '', ''],
     ['', '', '', '', ''],
@@ -22,12 +20,6 @@ function App() {
   const [peep, setPeep] = useState('');
   const { REACT_APP_MW_KEY } = process.env;
 
-  const getRandomWord = () => {
-    const secretWord = randomWord();
-    setAnswer(secretWord);
-    console.log(secretWord);
-  };
-
   const makeGuess = (playerGuess) => {
     //check if in dictionary
     fetch(
@@ -36,22 +28,34 @@ function App() {
       .then((response) => response.json())
       .then((data) => {
         if (data[0].meta) {
-          let plusOne = guessNumber + 1;
-          setGuessNumber(plusOne);
           let elements = window.document.getElementsByClassName(
-            `flippableG1L1`
+            `flippableG${guessIndex}`
           );
-          // elements[0].setAttribute('style', 'transform: rotateY(180deg)');
-          // elements[1].setAttribute('style', 'transform: rotateY(180deg)');
           for (let i = 0; i < elements.length; i++) {
-            elements[i].setAttribute('style', 'transform: rotateY(180deg)');
+            elements[i].a('style', 'transform: rotateY(180deg);');
           }
+          let plusOne = guessIndex + 1;
+          setGuessIndex(plusOne);
         } else {
           console.log(`${playerGuess} was not in the dictionary`);
+          //trigger a "not a word" effect in GameBoard
+          let elements = window.document.getElementsByClassName(
+            `shakeableG${guessIndex}`
+          );
+          console.log(`Found ${elements.length} shakeable lines`);
+          for (let i = 0; i < elements.length; i++) {
+            elements[i].classList.add('shake');
+            // elements[i].setAttribute('style', 'animation: shake;');
+          }
         }
       });
   };
 
+  useEffect(() => {
+    const secretWord = randomWord();
+    setAnswer(secretWord);
+    console.log(secretWord);
+  }, []);
   return (
     <div className={styles.app}>
       <UserLogin
@@ -68,11 +72,9 @@ function App() {
       <GameBoard
         guesses={guesses}
         setGuesses={setGuesses}
-        guessNumber={guessNumber}
-        setGuessNumber={setGuessNumber}
+        guessIndex={guessIndex}
+        makeGuess={makeGuess}
       />
-      <Button onClick={() => getRandomWord()}>CLICK TO TEST</Button>
-      <Button onClick={() => makeGuess('giant')}>Make Guess</Button>
     </div>
   );
 }

@@ -17,21 +17,18 @@
   width: 100%;
   max-width: $boardWH;
 }
-.guessLetter,
-.guessLetter:focus,
-.guessLetter:active {
+.guessLetter {
   width: $inputWH;
   height: $inputWH;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  box-shadow: none;
+  background-color: white;
   border: 1px solid var(--light-gray);
-  border-radius: 0;
-  outline: none;
-  box-shadow: none;
-  transition: none;
+  color: white;
   font-size: $fontSize;
   font-weight: 700;
-  padding: 0;
   @media screen and (max-height: $breakpoint-height) {
     width: $breakpointInputWH;
     height: $breakpointInputWH;
@@ -85,8 +82,8 @@
 
 /* Style the front side (fallback if image is missing) */
 .flipboxFront {
-  background-color: var(--dark-gray);
-  color: var(--white);
+  // background-color: var(--dark-gray);
+  color: black;
 }
 
 /* Style the back side */
@@ -97,4 +94,60 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+///Shake and bounce
+.shake {
+  animation-name: shake;
+  animation-duration: 600ms;
+}
+
+.win {
+  animation-name: bounce;
+  animation-duration: 1000ms;
+}
+
+@keyframes bounce {
+  0%,
+  20% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-30px);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+  60% {
+    transform: translateY(-15px);
+  }
+  80% {
+    transform: translateY(2px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes shake {
+  10%,
+  90% {
+    transform: translateX(-1px);
+  }
+
+  20%,
+  80% {
+    transform: translateX(2px);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: translateX(-4px);
+  }
+
+  40%,
+  60% {
+    transform: translateX(4px);
+  }
 }

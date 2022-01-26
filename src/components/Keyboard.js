@@ -6,9 +6,7 @@ export default function Keyboard({
   guesses,
   setGuesses,
   guessIndex,
-  setGuessIndex,
-  letterIndex,
-  setLetterIndex,
+  makeGuess,
 }) {
   const topRow = [
     { val: 'q', code: 'KeyQ' },
@@ -62,12 +60,18 @@ export default function Keyboard({
     const guessAtCurrentIndex = guesses[guessIndex];
     let currentGuess = [...guessAtCurrentIndex];
     if (code === 'Backspace' && currentGuess.length) {
-      newGuess.pop();
+      const lastLetter = currentGuess.reverse().findIndex((ltr) => ltr !== '');
+      currentGuess[lastLetter] = '';
+      currentGuess.reverse();
+    } else if (code === 'Enter' && currentGuess.length === 5) {
+      const myGuess = currentGuess.join('');
+      makeGuess(myGuess);
+      console.log(`My guess is: ${myGuess}`);
     } else {
-      currentGuess.push(target.value);
+      const firstEmptyIndex = currentGuess.findIndex((ltr) => ltr === '');
+      currentGuess[firstEmptyIndex] = target.value.toUpperCase();
     }
-    allGuesses[thisGuessIndex] = [...newGuess];
-    console.log(allGuesses);
+    allGuesses[guessIndex] = [...currentGuess];
     setGuesses([...allGuesses]);
   };
 
