@@ -30,21 +30,24 @@ function App() {
       method: 'get',
       url: `https://dictionaryapi.com/api/v3/references/collegiate/json/${playerGuess}?key=${REACT_APP_MW_KEY}`,
     };
-
     let data;
-    axios(config)
-      .then((response) => {
-        data = response.data[0];
-      })
-      .then(() => {
-        if (typeof data === 'object') {
-          isAWord(playerGuess, answer, guessIndex);
-          let plusOne = guessIndex + 1;
-          setGuessIndex(plusOne);
-        } else {
-          isNotAWord(playerGuess, guessIndex);
-        }
-      });
+    try {
+      axios(config)
+        .then((response) => {
+          data = response.data[0];
+        })
+        .then(() => {
+          if (typeof data === 'object') {
+            isAWord(playerGuess, answer, guessIndex);
+            let plusOne = guessIndex + 1;
+            setGuessIndex(plusOne);
+          } else {
+            isNotAWord(playerGuess, guessIndex);
+          }
+        });
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   useEffect(() => {
