@@ -9,8 +9,8 @@ export default function GameBoard({
   makeGuess,
 }) {
   return (
-    <>
-      <div className={styles.board}>
+    <div className={styles.board}>
+      <div className={styles.guessSection}>
         {[0, 1, 2, 3, 4, 5].map((num, idx) => {
           return (
             <div
@@ -82,12 +82,14 @@ export default function GameBoard({
           );
         })}
       </div>
-      <Keyboard
-        guesses={guesses}
-        setGuesses={setGuesses}
-        guessIndex={guessIndex}
-        makeGuess={makeGuess}
-      />
-    </>
+      <div className={styles.keyboardSection}>
+        <Keyboard
+          guesses={guesses}
+          setGuesses={setGuesses}
+          guessIndex={guessIndex}
+          makeGuess={makeGuess}
+        />
+      </div>
+    </div>
   );
 }

@@ -1,19 +1,14 @@
 @import '../styles/custom-properties.module.scss';
 
 .keyboard {
-  width: 100vw;
-  padding: 1vh 1vw;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
 }
 
 .keyboardRow {
-  width: 98vw;
-  max-width: 482px;
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
