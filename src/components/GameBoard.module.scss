@@ -1,29 +1,22 @@
 @import '../styles/custom-properties.module.scss';
 
 :root {
+  --total-board-height: 88vh;
   --keyboard-height: 192px;
   --keyboard-width: 484px;
 }
 
 .board {
-  height: 91vh;
+  height: var(--total-board-height);
   width: 100vw;
   max-width: 500px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
 }
 .guessSection {
-  height: calc(100% - var(--keyboard-height));
-  max-height: 400px;
-  margin-top: calc((100% - 400px) / 2);
-  width: 100%; //max 500px ^
-  max-width: 333px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  height: 410px;
+  max-height: calc(var(--total-board-height) - var(--keyboard-height));
+  max-width: 340px;
+  width: calc((var(--total-board-height) - var(--keyboard-height) / 1.2059);
+  margin: auto;
 }
 .keyboardSection {
   height: var(--keyboard-height);
@@ -32,11 +25,20 @@
   max-width: 100%;
 }
 .guessLine {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
   width: 100%;
-  height: 16%;
+  height: 60px;
+  max-height: calc(16.667% - 8px);
+  margin: 4px 0;
+  display: flex;
+}
+
+.flipbox {
+  width: calc(20% - 8px);
+  height: 100%;
+  margin: 0 4px;
+  background-color: transparent;
+  perspective: 1000px; /* Remove this if you don't want the 3D effect */
+  transition: transform 0.8s;
 }
 .guessLetter {
   width: 100%;
@@ -57,14 +59,6 @@
   transform: rotateY(180deg);
   font-size: $fontSize;
   font-weight: 700;
-}
-
-.flipbox {
-  background-color: transparent;
-  width: 19%;
-  height: 100%;
-  perspective: 1000px; /* Remove this if you don't want the 3D effect */
-  transition: transform 0.8s;
 }
 
 /* This container is needed to position the front and back side */
