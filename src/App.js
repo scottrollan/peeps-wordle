@@ -52,8 +52,8 @@ function App() {
 
   useEffect(() => {
     const secretWord = randomWord();
-    setAnswer(secretWord);
-    console.log(secretWord);
+    const wordle = secretWord.toUpperCase();
+    setAnswer(wordle);
   }, []);
   return (
     <div className={styles.app}>

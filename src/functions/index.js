@@ -1,45 +1,71 @@
-export const isAWord = (gss, ans, guessIndex) => {
-  let answerArray = ans.toUpperCase().split('');
-  let guessArray = gss.split('');
+import $ from 'jquery';
 
-  guessArray.forEach((l, i) => {
-    const keyHit = window.document.getElementById(`Key${l}`);
-    keyHit.setAttribute(
-      'style',
-      'background-color: var(--dark-gray); color: white;'
-    );
-    if (answerArray[i] === l) {
-      answerArray[i] = '!';
-      keyHit.setAttribute('style', 'background-color: var(--green);');
-      const isCorrect = window.document.getElementById(`g${guessIndex}l${i}`);
-      isCorrect.setAttribute('style', 'background-color: var(--green);');
-    }
-  });
-  guessArray.forEach((l, i) => {
-    const keyHit = window.document.getElementById(`Key${l}`);
-    if (answerArray.includes(l) && answerArray[i] !== l) {
-      keyHit.setAttribute('style', 'background-color: var(--puke-yellow);');
-      const isPresent = window.document.getElementById(`g${guessIndex}l${i}`);
-      isPresent.setAttribute('style', 'background-color: var(--puke-yellow);');
-    }
-  });
-  let elements = window.document.getElementsByClassName(
-    `flippableG${guessIndex}`
-  );
-  for (let i = 0; i < elements.length; i++) {
-    elements[i].setAttribute('style', 'transform: rotateY(180deg);');
+const youWon = (i) => {
+  let ordinal = '';
+  switch (i) {
+    case 0:
+      ordinal = 'first';
+      break;
+    case 1:
+      ordinal = 'second';
+      break;
+    case 2:
+      ordinal = 'third';
+      break;
+    default:
+      ordinal = `${i + 1}th`;
+  }
+  console.log(`YOU WON on the ${ordinal} try!!!!`);
+};
+
+export const isAWord = (gss, ans, guessIndex) => {
+  console.log(`ans: ${ans},  gss: ${gss}`);
+  switch (true) {
+    case gss === ans:
+      youWon(guessIndex);
+      break;
+    default:
+      const answerArray = ans.toUpperCase().split('');
+      let guessArray = [];
+      const guessSplit = gss.split('');
+      guessSplit.forEach((g) => {
+        guessArray.push({ ltr: g, dataState: '' });
+      });
+
+      guessArray.forEach((l, i) => {
+        if (answerArray[i] === l.ltr) {
+          answerArray[i] = '*';
+          guessArray[i].dataState = 'correct';
+          $(`#Key${l.ltr}`).attr('data-state', 'correct');
+          $(`#g${guessIndex}l${i}`).css('background-color', 'var(--green');
+        } else {
+          $(`#Key${l.ltr}`).attr('data-state', 'absent');
+        }
+      });
+      console.log(`after green: ${answerArray}`);
+
+      guessArray.forEach((l, i) => {
+        if (l.dataState === '') {
+          const found = answerArray.find((a) => a === l.ltr);
+          if (found) {
+            const fIndex = answerArray.indexOf(found);
+            answerArray[fIndex] = '*';
+            $(`#g${guessIndex}l${i}`).css(
+              'background-color',
+              'var(--puke-yellow'
+            );
+            $(`#Key${l.ltr}`).attr('data-state', 'present');
+          }
+        }
+      });
+      console.log(`after yellow: ${answerArray}`);
+
+      $(`.flippableG${guessIndex}`).css('transform', 'rotateY(180deg)');
   }
 };
 
 export const isNotAWord = (gss, guessIndex) => {
   console.log(`${gss} was not in the dictionary`);
   //trigger a "not a word" effect in GameBoard
-  let elements = window.document.getElementsByClassName(
-    `shakeableG${guessIndex}`
-  );
-  console.log(`Found ${elements.length} shakeable lines`);
-  for (let i = 0; i < elements.length; i++) {
-    elements[i].classList.add('shake');
-    // elements[i].setAttribute('style', 'animation: shake;');
-  }
+  $(`.shakeableG${guessIndex}`).addClass('shake');
 };

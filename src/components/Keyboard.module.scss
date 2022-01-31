@@ -34,3 +34,19 @@
     font-size: small;
   }
 }
+
+[data-state=''] {
+  background-color: var(--light-gray);
+}
+
+[data-state='present'] {
+  background-color: var(--puke-yellow);
+}
+
+[data-state='correct'] {
+  background-color: var(--green);
+}
+
+[data-state='absent'] {
+  background-color: var(--dark-gray);
+}

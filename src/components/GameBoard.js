@@ -16,7 +16,6 @@ export default function GameBoard({
             <div
               key={`${idx}${num}`}
               className={[`${styles.guessLine} shakeableG${num}`]}
-              style={{ animation: 'shake' }}
             >
               <div className={[`${styles.flipbox} flippableG${num}`]}>
                 <div className={[`${styles.flipboxInner} flippableG${num}`]}>

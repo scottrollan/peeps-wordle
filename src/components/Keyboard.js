@@ -85,6 +85,7 @@ export default function Keyboard({
               value={btn.val}
               id={btn.code}
               className={styles.button}
+              data-state=""
               onClick={(e) => handleChange(e.target, btn.code)}
             >
               {btn.val}
@@ -100,6 +101,7 @@ export default function Keyboard({
               value={btn.val}
               id={btn.code}
               className={styles.button}
+              data-state=""
               onClick={(e) => handleChange(e.target, btn.code)}
             >
               {btn.val}
@@ -115,6 +117,7 @@ export default function Keyboard({
               value={btn.val}
               id={btn.code}
               className={styles.button}
+              data-state=""
               onClick={(e) => handleChange(e.target, btn.code)}
             >
               {btn.html ? btn.html : btn.val}
