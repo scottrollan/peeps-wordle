@@ -5,11 +5,11 @@
   -webkit-animation-duration: 600ms;
 }
 
-.win {
+.bounce {
   animation-name: bounce;
   animation-duration: 1000ms;
-  -webkit-animation-name: bounce;
-  -webkit-animation-duration: 1000ms;
+  /* -webkit-animation-name: bounce;
+  -webkit-animation-duration: 1000ms; */
 }
 
 @keyframes bounce {
