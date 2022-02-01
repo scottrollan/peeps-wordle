@@ -54,6 +54,7 @@ function App() {
     const secretWord = randomWord();
     const wordle = secretWord.toUpperCase();
     setAnswer(wordle);
+    window.scrollTo(0, 1);
   }, []);
   return (
     <div className={styles.app}>

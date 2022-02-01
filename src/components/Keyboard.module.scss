@@ -35,18 +35,33 @@
   }
 }
 
-[data-state=''] {
+[data-state=''],
+[data-state='']:hover,
+[data-state='']:active,
+[data-state='']:visited,
+[data-state='']:focus {
   background-color: var(--light-gray);
 }
-
-[data-state='present'] {
+[data-state='present'],
+[data-state='present']:hover,
+[data-state='present']:active,
+[data-state='present']:focus,
+[data-state='present']:visited {
   background-color: var(--puke-yellow);
 }
 
-[data-state='correct'] {
+[data-state='correct'],
+[data-state='correct']:hover,
+[data-state='correct']:active,
+[data-state='correct']:focus,
+[data-state='correct']:visited {
   background-color: var(--green);
 }
 
-[data-state='absent'] {
+[data-state='absent'],
+[data-state='absent']:hover,
+[data-state='absent']:active,
+[data-state='absent']:focus,
+[data-state='absent']:visited {
   background-color: var(--dark-gray);
 }
