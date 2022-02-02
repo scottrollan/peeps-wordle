@@ -1,6 +1,7 @@
 import React from 'react';
 import Keyboard from './Keyboard';
 import styles from './GameBoard.module.scss';
+import './GameBoard.css';
 
 export default function GameBoard({
   guesses,
@@ -25,7 +26,7 @@ export default function GameBoard({
                     {guesses[num][0]}
                   </div>
                   <div className={styles.flipboxBack} id={`g${num}l0`}>
-                    <span className={styles.backLetter}>{guesses[idx][0]}</span>
+                    <span>{guesses[idx][0]}</span>
                   </div>
                 </div>
               </div>

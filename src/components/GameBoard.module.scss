@@ -17,6 +17,7 @@
   max-width: 340px;
   width: calc((var(--total-board-height) - var(--keyboard-height) / 1.2059);
   margin: auto;
+  pointer-events: none;
 }
 .keyboardSection {
   height: var(--keyboard-height);
@@ -54,15 +55,6 @@
   font-weight: 700;
 }
 
-.backLetter {
-  -webkit-transform: rotateY(180deg);
-  transform: rotateY(180deg);
-  font-size: $fontSize;
-  font-weight: 700;
-  color: white;
-}
-
-/* This container is needed to position the front and back side */
 .flipboxInner {
   position: relative;
   width: 100%;
@@ -72,12 +64,6 @@
   transform-style: preserve-3d;
 }
 
-/* Do an horizontal flip when you move the mouse over the flip box container */
-// .flipbox:hover .flipboxInner {
-//   transform: rotateY(180deg);
-// }
-
-/* Position the front and back side */
 .flipboxFront,
 .flipboxBack {
   position: absolute;
@@ -87,22 +73,25 @@
   backface-visibility: hidden;
 }
 
-/* Style the front side (fallback if image is missing) */
 .flipboxFront {
-  // background-color: var(--dark-gray);
   color: black;
 }
 
 /* Style the back side */
 .flipboxBack {
-  background-color: var(--dark-gray);
-  color: white;
-  transform: rotateY(180deg);
   display: flex;
   justify-content: center;
   align-items: center;
+   background-color: var(--dark-gray);
+  color: white;
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+  font-size: $fontSize;
+  font-weight: 700;
 }
-
+.flipboxBack > span {
+  transform: rotateY(-180deg);
+}
 ///Shake and bounce
 .shake {
   animation-name: shake;

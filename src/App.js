@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import UserLogin from './components/UserLogin';
 import GameBoard from './components/GameBoard';
+import $ from 'jquery';
 import { peeps } from './data/Peeps';
 import { randomWord } from './data/Words';
-import { isAWord, isNotAWord } from './functions/index';
+import { checkWord } from './functions/index';
 import logo from './assets/pwLogo.png';
 import styles from './App.module.scss';
-
-const axios = require('axios');
 
 function App() {
   const [answer, setAnswer] = useState('');
@@ -22,31 +21,16 @@ function App() {
   ]);
   const [userModalShow, setUserModalShow] = useState(true);
   const [peep, setPeep] = useState('');
-  const { REACT_APP_MW_KEY } = process.env;
+  const headerRef = useRef();
 
   const makeGuess = (playerGuess) => {
-    //check if in dictionary
-    const config = {
-      method: 'get',
-      url: `https://dictionaryapi.com/api/v3/references/collegiate/json/${playerGuess}?key=${REACT_APP_MW_KEY}`,
-    };
-    let data;
-    try {
-      axios(config)
-        .then((response) => {
-          data = response.data[0];
-        })
-        .then(() => {
-          if (typeof data === 'object') {
-            isAWord(playerGuess, answer, guessIndex);
-            let plusOne = guessIndex + 1;
-            setGuessIndex(plusOne);
-          } else {
-            isNotAWord(playerGuess, guessIndex);
-          }
-        });
-    } catch (error) {
-      console.log(error.message);
+    const guessLength = playerGuess.length;
+    switch (guessLength) {
+      case 5:
+        checkWord(playerGuess, answer, guessIndex, setGuessIndex);
+        break;
+      default:
+        $(`.shakeableG${guessIndex}`).addClass('shake');
     }
   };
 
@@ -54,7 +38,8 @@ function App() {
     const secretWord = randomWord();
     const wordle = secretWord.toUpperCase();
     setAnswer(wordle);
-    window.scrollTo(0, 1);
+    console.log(wordle);
+    headerRef.current.scrollIntoView({ behavior: 'smooth' });
   }, []);
   return (
     <div className={styles.app}>
@@ -65,7 +50,7 @@ function App() {
         peep={peep}
         setPeep={setPeep}
       />
-      <div className={styles.header}>
+      <div className={styles.header} ref={headerRef}>
         <img src={logo} className={styles.logo} alt="logo" />
         <h3>Peeps Wordle</h3>
       </div>

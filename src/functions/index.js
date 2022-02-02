@@ -1,26 +1,14 @@
 import $ from 'jquery';
+const { REACT_APP_MW_KEY } = process.env;
 
-const youWon = (i) => {
-  let ordinal = '';
-  switch (i) {
-    case 0:
-      ordinal = 'first';
-      break;
-    case 1:
-      ordinal = 'second';
-      break;
-    case 2:
-      ordinal = 'third';
-      break;
-    default:
-      ordinal = `${i + 1}th`;
-  }
-  console.log(`YOU WON on the ${ordinal} try!!!!`);
-  $(`.shakeableG${i}`).addClass('win');
+const axios = require('axios');
+
+const youWin = (guessIndex) => {
+  $(`.flippableG${guessIndex}`).css('transform', 'rotateY(180deg)');
+  setTimeout(() => $(`.shakeableG${guessIndex}`).addClass('bounce'), 600);
 };
 
-export const isAWord = (gss, ans, guessIndex) => {
-  console.log(`ans: ${ans},  gss: ${gss}`);
+const isAWord = (gss, ans, guessIndex) => {
   const answerArray = ans.toUpperCase().split('');
   let guessArray = [];
   const guessSplit = gss.split('');
@@ -38,7 +26,6 @@ export const isAWord = (gss, ans, guessIndex) => {
       $(`#Key${l.ltr}`).attr('data-state', 'absent');
     }
   });
-  console.log(`after green: ${answerArray}`);
 
   guessArray.forEach((l, i) => {
     if (l.dataState === '') {
@@ -51,17 +38,42 @@ export const isAWord = (gss, ans, guessIndex) => {
       }
     }
   });
-  console.log(`after yellow: ${answerArray}`);
 
   $(`.flippableG${guessIndex}`).css('transform', 'rotateY(180deg)');
-  if (gss === ans) {
-    $(`.shakeableG${guessIndex}`).addClass('win');
-    youWon(guessIndex);
-  }
 };
 
-export const isNotAWord = (gss, guessIndex) => {
+const isNotAWord = (gss, guessIndex) => {
   console.log(`${gss} was not in the dictionary`);
   //trigger a "not a word" effect in GameBoard
-  $(`.shakeableG${guessIndex}`).addClass('bounce');
+  $(`.shakeableG${guessIndex}`).addClass('shake');
+};
+
+export const checkWord = (gss, ans, guessIndex, setGuessIndex) => {
+  if (ans === gss) {
+    youWin();
+  }
+
+  //check if in dictionary
+  const config = {
+    method: 'get',
+    url: `https://dictionaryapi.com/api/v3/references/collegiate/json/${gss}?key=${REACT_APP_MW_KEY}`,
+  };
+  let data;
+  try {
+    axios(config)
+      .then((response) => {
+        data = response.data[0];
+      })
+      .then(() => {
+        if (typeof data === 'object') {
+          isAWord(gss, ans, guessIndex);
+          let plusOne = guessIndex + 1;
+          setGuessIndex(plusOne);
+        } else {
+          isNotAWord(gss, guessIndex);
+        }
+      });
+  } catch (error) {
+    console.log(error.message);
+  }
 };
