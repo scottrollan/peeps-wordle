@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import Div100vh from 'react-div-100vh';
 import UserLogin from './components/UserLogin';
 import GameBoard from './components/GameBoard';
 import $ from 'jquery';
@@ -42,7 +43,7 @@ function App() {
     headerRef.current.scrollIntoView({ behavior: 'smooth' });
   }, []);
   return (
-    <div className={styles.app}>
+    <Div100vh className={styles.app}>
       <UserLogin
         show={userModalShow}
         setShow={setUserModalShow}
@@ -60,7 +61,7 @@ function App() {
         guessIndex={guessIndex}
         makeGuess={makeGuess}
       />
-    </div>
+    </Div100vh>
   );
 }
 

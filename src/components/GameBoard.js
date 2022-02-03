@@ -24,7 +24,10 @@ export default function GameBoard({
                 </Tooltip>
               }
             >
-              <div className={[`${styles.guessLine} shakeableG${num}`]}>
+              <div
+                key={`${idx}${num}`}
+                className={[`${styles.guessLine} shakeableG${num}`]}
+              >
                 <div className={[`${styles.flipbox}`]}>
                   <div
                     className={[`${styles.flipboxInner} flippableG${num}L0`]}
