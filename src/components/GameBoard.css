@@ -1,20 +1,51 @@
+.flip {
+  animation: flip 800ms;
+  -webkit-animation: flip 800ms;
+  -moz-animation: flip 800ms;
+}
+
 .shake {
-  animation-name: shake;
-  -webkit-animation-name: shake;
-  animation-duration: 600ms;
-  -webkit-animation-duration: 600ms;
-  -moz-animation-name: bounce;
-  -moz-animation-duration: 100ms;
+  animation: shake 600ms;
+  -webkit-animation: shake 600ms;
+  -moz-animation: shake 600ms;
 }
 
 .bounce {
-  animation-name: bounce;
-  -webkit-animation-name: bounce;
-  -moz-animation-name: bounce;
-  animation-duration: 1000ms;
-  -webkit-animation-duration: 1000ms;
-  -moz-animation-duration: 100ms;
+  animation: bounce 1s;
+  -webkit-animation: bounce 1s;
+  -moz-animation: bounce 1s;
 }
+
+/* ******************* */
+
+@keyframes flip {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(180deg);
+  }
+}
+
+@-webkit-keyframes flip {
+  0% {
+    -webkit-transform: translateY(0);
+  }
+  100% {
+    -webkit-transform: translateY(180deg);
+  }
+}
+
+@-moz-keyframes flip {
+  0% {
+    -moz-transform: translateY(0);
+  }
+  100% {
+    -moz-transform: translateY(180deg);
+  }
+}
+
+/* ******************* */
 
 @keyframes bounce {
   0%,
@@ -37,6 +68,7 @@
     transform: translateY(0);
   }
 }
+
 @-webkit-keyframes bounce {
   0%,
   20% {
@@ -58,6 +90,7 @@
     -webkit-transform: translateY(0);
   }
 }
+
 @-moz-keyframes bounce {
   0%,
   20% {
@@ -79,6 +112,8 @@
     -moz-transform: translateY(0);
   }
 }
+
+/* ******************* */
 
 @keyframes shake {
   10%,

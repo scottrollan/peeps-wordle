@@ -1,11 +1,40 @@
 import $ from 'jquery';
+import { OverlayTrigger } from 'react-bootstrap';
 const { REACT_APP_MW_KEY } = process.env;
 
 const axios = require('axios');
 
 const youWin = (guessIndex) => {
-  $(`.flippableG${guessIndex}`).css('transform', 'rotateY(180deg)');
-  setTimeout(() => $(`.shakeableG${guessIndex}`).addClass('bounce'), 600);
+  console.log('WINNER!!!!!!!!!!');
+};
+
+const vannaWhite = (guessIndex, isWinner) => {
+  $(`.flippableG${guessIndex}L0`).css('transform', 'rotateY(180deg)');
+  setTimeout(
+    () => $(`.flippableG${guessIndex}L1`).css('transform', 'rotateY(180deg)'),
+    200
+  );
+  setTimeout(
+    () => $(`.flippableG${guessIndex}L2`).css('transform', 'rotateY(180deg)'),
+    400
+  );
+  setTimeout(
+    () => $(`.flippableG${guessIndex}L3`).css('transform', 'rotateY(180deg)'),
+    600
+  );
+  setTimeout(
+    () => $(`.flippableG${guessIndex}L4`).css('transform', 'rotateY(180deg)'),
+    800
+  );
+  if (isWinner) {
+    youWin(guessIndex);
+  }
+};
+
+const isNotAWord = (gss, guessIndex) => {
+  console.log(`${gss} was not in the dictionary`);
+  //trigger a "not a word" effect in GameBoard
+  setTimeout(() => $(`.shakeableG${guessIndex}`).addClass('shake'), 800);
 };
 
 const isAWord = (gss, ans, guessIndex) => {
@@ -38,21 +67,11 @@ const isAWord = (gss, ans, guessIndex) => {
       }
     }
   });
-
-  $(`.flippableG${guessIndex}`).css('transform', 'rotateY(180deg)');
-};
-
-const isNotAWord = (gss, guessIndex) => {
-  console.log(`${gss} was not in the dictionary`);
-  //trigger a "not a word" effect in GameBoard
-  $(`.shakeableG${guessIndex}`).addClass('shake');
+  const iWon = ans === gss;
+  vannaWhite(guessIndex, iWon);
 };
 
 export const checkWord = (gss, ans, guessIndex, setGuessIndex) => {
-  if (ans === gss) {
-    youWin();
-  }
-
   //check if in dictionary
   const config = {
     method: 'get',
