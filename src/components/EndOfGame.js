@@ -2,14 +2,20 @@ import React from 'react';
 import { Modal } from 'react-bootstrap';
 import styles from './EndOfGame.module.scss';
 
-export default function EndOfGame({ show, peep, setShow }) {
+export default function EndOfGame({ show, peep, setShow, answer }) {
   return (
     <Modal
       show={show}
       onHide={() => setShow(false)}
       dialogClassName="modal-90h"
     >
-      <Modal.Header closeButton>{peep}, looks like you won. </Modal.Header>
+      <Modal.Header closeButton>
+        <span id="endGreet"></span>
+        {peep}, the word was {answer}
+        <span id="endMiddle"></span>
+        <span></span>
+        <span id="endClose"></span>
+      </Modal.Header>
 
       <Modal.Body>
         <div style={{ display: 'flex', flexDirection: 'column' }}>

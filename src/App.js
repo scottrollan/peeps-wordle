@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import Div100vh from 'react-div-100vh';
 import UserLogin from './components/UserLogin';
 import GameBoard from './components/GameBoard';
@@ -24,7 +24,6 @@ function App() {
   const [userModalShow, setUserModalShow] = useState(true);
   const [endModalShow, setEndModalShow] = useState(false);
   const [peep, setPeep] = useState('');
-  const headerRef = useRef();
 
   const makeGuess = (playerGuess) => {
     const guessLength = playerGuess.length;
@@ -48,7 +47,6 @@ function App() {
     const wordle = secretWord.toUpperCase();
     setAnswer(wordle);
     console.log(wordle);
-    headerRef.current.scrollIntoView({ behavior: 'smooth' });
   }, []);
   return (
     <Div100vh className={styles.app}>
@@ -59,8 +57,13 @@ function App() {
         peep={peep}
         setPeep={setPeep}
       />
-      <EndOfGame show={endModalShow} peep={peep} setShow={setEndModalShow} />
-      <div className={styles.header} ref={headerRef}>
+      <EndOfGame
+        show={endModalShow}
+        peep={peep}
+        setShow={setEndModalShow}
+        answer={answer}
+      />
+      <div className={styles.header}>
         <img src={logo} className={styles.logo} alt="logo" />
         <h3>Peeps Wordle</h3>
       </div>

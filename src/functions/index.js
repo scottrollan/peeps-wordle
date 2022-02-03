@@ -6,9 +6,18 @@ const axios = require('axios');
 
 const youWin = (guessIndex, setEndModalShow) => {
   setTimeout(() => setEndModalShow(true), 2000);
+  //trigger a "not a word" effect in GameBoard
+  $('#tooltipText').text('...YOU WIN...');
+  $('#tooltip').css('display', 'flex');
+  setTimeout(() => $('#tooltip').css('display', 'none'), 1600);
 };
 
-const vannaWhite = (guessIndex, isWinner, setEndModalShow) => {
+const youLose = (setEndModalShow) => {
+  $('#endGreet').text('Shucks, ');
+  setTimeout(() => setEndModalShow(true), 2000);
+};
+
+const vannaWhite = (guessIndex, isWinner, isLoser, setEndModalShow) => {
   $(`.flippableG${guessIndex}L0`).css('transform', 'rotateY(180deg)');
   setTimeout(
     () => $(`.flippableG${guessIndex}L1`).css('transform', 'rotateY(180deg)'),
@@ -28,6 +37,9 @@ const vannaWhite = (guessIndex, isWinner, setEndModalShow) => {
   );
   if (isWinner) {
     youWin(guessIndex, setEndModalShow);
+  }
+  if (isLoser) {
+    youLose(setEndModalShow);
   }
 };
 
@@ -49,16 +61,22 @@ const isAWord = (gss, ans, guessIndex, setEndModalShow) => {
   });
 
   guessArray.forEach((l, i) => {
+    //find all "correct"
+    const currentBG = $(`#Key${l.ltr}`).css('background-color');
     if (answerArray[i] === l.ltr) {
       answerArray[i] = '*';
       guessArray[i].dataState = 'correct';
       $(`#Key${l.ltr}`).attr('data-state', 'correct');
       $(`#g${guessIndex}l${i}`).css('background-color', 'var(--green');
-    } else {
+    } else if (
+      //else if the background is not already green or yellow
+      currentBG !== 'rgb(201, 180, 88)' &&
+      currentBG !== 'rgb(106, 170, 100)'
+    ) {
       $(`#Key${l.ltr}`).attr('data-state', 'absent');
     }
   });
-
+  //then find "present"
   guessArray.forEach((l, i) => {
     if (l.dataState === '') {
       const found = answerArray.find((a) => a === l.ltr);
@@ -66,12 +84,20 @@ const isAWord = (gss, ans, guessIndex, setEndModalShow) => {
         const fIndex = answerArray.indexOf(found);
         answerArray[fIndex] = '*';
         $(`#g${guessIndex}l${i}`).css('background-color', 'var(--puke-yellow');
-        $(`#Key${l.ltr}`).attr('data-state', 'present');
+        const currentBG = $(`#Key${l.ltr}`).css('background-color');
+        console.log(currentBG);
+        if (currentBG !== 'rgb(106, 170, 100)') {
+          $(`#Key${l.ltr}`).attr('data-state', 'present');
+        }
       }
     }
   });
   const iWon = ans === gss;
-  vannaWhite(guessIndex, iWon, setEndModalShow);
+  let iLost;
+  if (!iWon && guessIndex === 5) {
+    iLost = true;
+  }
+  vannaWhite(guessIndex, iWon, iLost, setEndModalShow);
 };
 
 export const checkWord = (
