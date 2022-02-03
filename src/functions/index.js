@@ -4,11 +4,11 @@ const { REACT_APP_MW_KEY } = process.env;
 
 const axios = require('axios');
 
-const youWin = (guessIndex) => {
-  console.log('WINNER!!!!!!!!!!');
+const youWin = (guessIndex, setEndModalShow) => {
+  setTimeout(() => setEndModalShow(true), 2000);
 };
 
-const vannaWhite = (guessIndex, isWinner) => {
+const vannaWhite = (guessIndex, isWinner, setEndModalShow) => {
   $(`.flippableG${guessIndex}L0`).css('transform', 'rotateY(180deg)');
   setTimeout(
     () => $(`.flippableG${guessIndex}L1`).css('transform', 'rotateY(180deg)'),
@@ -27,17 +27,20 @@ const vannaWhite = (guessIndex, isWinner) => {
     800
   );
   if (isWinner) {
-    youWin(guessIndex);
+    youWin(guessIndex, setEndModalShow);
   }
 };
 
 const isNotAWord = (gss, guessIndex) => {
   console.log(`${gss} was not in the dictionary`);
   //trigger a "not a word" effect in GameBoard
-  setTimeout(() => $(`.shakeableG${guessIndex}`).addClass('shake'), 800);
+  $('#tooltipText').text('...Not a word...');
+  $(`.shakeableG${guessIndex}`).addClass('shake');
+  $('#tooltip').css('display', 'flex');
+  setTimeout(() => $('#tooltip').css('display', 'none'), 1600);
 };
 
-const isAWord = (gss, ans, guessIndex) => {
+const isAWord = (gss, ans, guessIndex, setEndModalShow) => {
   const answerArray = ans.toUpperCase().split('');
   let guessArray = [];
   const guessSplit = gss.split('');
@@ -68,10 +71,16 @@ const isAWord = (gss, ans, guessIndex) => {
     }
   });
   const iWon = ans === gss;
-  vannaWhite(guessIndex, iWon);
+  vannaWhite(guessIndex, iWon, setEndModalShow);
 };
 
-export const checkWord = (gss, ans, guessIndex, setGuessIndex) => {
+export const checkWord = (
+  gss,
+  ans,
+  guessIndex,
+  setGuessIndex,
+  setEndModalShow
+) => {
   //check if in dictionary
   const config = {
     method: 'get',
@@ -85,11 +94,11 @@ export const checkWord = (gss, ans, guessIndex, setGuessIndex) => {
       })
       .then(() => {
         if (typeof data === 'object') {
-          isAWord(gss, ans, guessIndex);
+          isAWord(gss, ans, guessIndex, setEndModalShow);
           let plusOne = guessIndex + 1;
           setGuessIndex(plusOne);
         } else {
-          isNotAWord(gss, guessIndex);
+          isNotAWord(gss, guessIndex, setEndModalShow);
         }
       });
   } catch (error) {
