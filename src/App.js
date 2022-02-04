@@ -5,8 +5,8 @@ import GameBoard from './components/GameBoard';
 import EndOfGame from './components/EndOfGame';
 import $ from 'jquery';
 import { peeps } from './data/Peeps';
-import { randomWord } from './data/Words';
-import { checkWord } from './functions/index';
+import { randomWord } from './functions/index';
+import { checkWord, startOver } from './functions/index';
 import logo from './assets/pwLogo.png';
 import styles from './App.module.scss';
 
@@ -24,6 +24,16 @@ function App() {
   const [userModalShow, setUserModalShow] = useState(true);
   const [endModalShow, setEndModalShow] = useState(false);
   const [peep, setPeep] = useState('');
+
+  const newGame = () => {
+    startOver(
+      setAnswer,
+      setGuesses,
+      guessIndex,
+      setGuessIndex,
+      setEndModalShow
+    );
+  };
 
   const makeGuess = (playerGuess) => {
     const guessLength = playerGuess.length;
@@ -62,6 +72,7 @@ function App() {
         peep={peep}
         setShow={setEndModalShow}
         answer={answer}
+        newGame={newGame}
       />
       <div className={styles.header}>
         <img src={logo} className={styles.logo} alt="logo" />

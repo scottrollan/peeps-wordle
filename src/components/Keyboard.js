@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { Button } from 'react-bootstrap';
+import $ from 'jquery';
 import styles from './Keyboard.module.scss';
 
 export default function Keyboard({
@@ -35,9 +36,12 @@ export default function Keyboard({
     {
       val: 'enter',
       html: (
-        <span style={{ maxWidth: '100%', fontSize: '2vw', padding: '0' }}>
-          ENTER
-        </span>
+        <i
+          className="fas fa-check"
+          style={{
+            padding: '0 8px',
+          }}
+        ></i>
       ),
       code: 'Enter',
     },
@@ -50,7 +54,14 @@ export default function Keyboard({
     { val: 'm', code: 'KeyM' },
     {
       val: 'backspace',
-      html: <i className="far fa-backspace" style={{ padding: '0' }}></i>,
+      html: (
+        <i
+          className="far fa-backspace"
+          style={{
+            padding: '0 6px',
+          }}
+        ></i>
+      ),
       code: 'Backspace',
     },
   ];
@@ -75,6 +86,11 @@ export default function Keyboard({
     setGuesses([...allGuesses]);
   };
 
+  useEffect(() => {
+    // $('#Enter').css('background-color', 'var(--dark-gray)');
+    // $('#Backspace').css('background-color', 'var(--dark-gray)');
+  }, []);
+
   return (
     <div className={styles.keyboad}>
       <div className={styles.keyboardRow}>
@@ -84,8 +100,8 @@ export default function Keyboard({
               key={`${btn.val}${idx}`}
               value={btn.val}
               id={btn.code}
-              className={styles.button}
-              data-state="foo"
+              className={[`${styles.key} key`]}
+              data-state=""
               onClick={(e) => handleChange(e.target, btn.code)}
             >
               {btn.val}
@@ -100,8 +116,8 @@ export default function Keyboard({
               key={`${btn.val}${idx}`}
               value={btn.val}
               id={btn.code}
-              className={styles.button}
-              data-state="foo"
+              className={[`${styles.key} key`]}
+              data-state=""
               onClick={(e) => handleChange(e.target, btn.code)}
             >
               {btn.val}
@@ -116,8 +132,20 @@ export default function Keyboard({
               key={`${btn.val}${idx}`}
               value={btn.val}
               id={btn.code}
-              className={styles.button}
-              data-state="foo"
+              style={{
+                backgroundColor:
+                  btn.val === 'enter' || btn.val === 'backspace'
+                    ? 'var(--purple)'
+                    : null,
+              }}
+              className={[
+                `${styles.key} ${
+                  btn.val === 'enter' || btn.val === 'backspace'
+                    ? 'bigKey'
+                    : 'key'
+                }`,
+              ]}
+              data-state=""
               onClick={(e) => handleChange(e.target, btn.code)}
             >
               {btn.html ? btn.html : btn.val}

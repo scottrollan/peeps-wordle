@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import { OverlayTrigger } from 'react-bootstrap';
+import { words } from '../data/Words';
 const { REACT_APP_MW_KEY } = process.env;
 
 const axios = require('axios');
@@ -8,8 +8,8 @@ const youWin = (guessIndex, setEndModalShow) => {
   setTimeout(() => setEndModalShow(true), 2000);
   //trigger a "not a word" effect in GameBoard
   $('#tooltipText').text('...YOU WIN...');
-  $('#tooltip').css('display', 'flex');
-  setTimeout(() => $('#tooltip').css('display', 'none'), 1600);
+  setTimeout(() => $('#tooltip').css('display', 'flex'), 900);
+  setTimeout(() => $('#tooltip').css('display', 'none'), 2000);
 };
 
 const youLose = (setEndModalShow) => {
@@ -85,7 +85,6 @@ const isAWord = (gss, ans, guessIndex, setEndModalShow) => {
         answerArray[fIndex] = '*';
         $(`#g${guessIndex}l${i}`).css('background-color', 'var(--puke-yellow');
         const currentBG = $(`#Key${l.ltr}`).css('background-color');
-        console.log(currentBG);
         if (currentBG !== 'rgb(106, 170, 100)') {
           $(`#Key${l.ltr}`).attr('data-state', 'present');
         }
@@ -130,4 +129,38 @@ export const checkWord = (
   } catch (error) {
     console.log(error.message);
   }
+};
+
+export const randomWord = () => {
+  const maxIdx = words.length - 1;
+  const wordIndex = Math.floor(Math.random() * maxIdx);
+  return words[wordIndex];
+};
+
+export const startOver = (
+  setAnswer,
+  setGuesses,
+  guessIndex,
+  setGuessIndex,
+  setEndModalShow
+) => {
+  $('.tile').css('background-color', 'var(--dark-gray)');
+  // $(`.flippable`).css('transform', 'rotateY(-180deg)');
+  $(`.flippable`).css('transform', 'initial');
+  $('.key').attr('data-state', '');
+  $('.key').css('background-color', 'var(--light-gray');
+  setEndModalShow(false);
+  setGuesses([
+    ['', '', '', '', ''],
+    ['', '', '', '', ''],
+    ['', '', '', '', ''],
+    ['', '', '', '', ''],
+    ['', '', '', '', ''],
+    ['', '', '', '', ''],
+  ]);
+  const secretWord = randomWord();
+  const wordle = secretWord.toUpperCase();
+  setAnswer(wordle);
+  console.log(wordle);
+  setGuessIndex(0);
 };

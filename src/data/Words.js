@@ -1,5 +1,3 @@
-import { BreadcrumbItem } from 'react-bootstrap';
-
 export const words = [
   'about',
   'abuse',

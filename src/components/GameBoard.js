@@ -24,61 +24,96 @@ export default function GameBoard({
               className={[`${styles.guessLine} shakeableG${num}`]}
             >
               <div className={[`${styles.flipbox}`]}>
-                <div className={[`${styles.flipboxInner} flippableG${num}L0`]}>
+                <div
+                  className={[
+                    `${styles.flipboxInner} flippable flippableG${num}L0`,
+                  ]}
+                >
                   <div
                     className={[`${styles.guessLetter} ${styles.flipboxFront}`]}
                   >
                     {guesses[num][0]}
                   </div>
-                  <div className={styles.flipboxBack} id={`g${num}l0`}>
+                  <div
+                    className={[`${styles.flipboxBack} tile`]}
+                    id={`g${num}l0`}
+                  >
                     <span>{guesses[idx][0]}</span>
                   </div>
                 </div>
               </div>
               <div className={[`${styles.flipbox}`]}>
-                <div className={[`${styles.flipboxInner} flippableG${num}L1`]}>
+                <div
+                  className={[
+                    `${styles.flipboxInner} flippable flippableG${num}L1`,
+                  ]}
+                >
                   <div
                     className={[`${styles.guessLetter} ${styles.flipboxFront}`]}
                   >
                     {guesses[idx][1]}
                   </div>
-                  <div className={styles.flipboxBack} id={`g${num}l1`}>
+                  <div
+                    className={[`${styles.flipboxBack} tile`]}
+                    id={`g${num}l1`}
+                  >
                     <span className={styles.backLetter}>{guesses[idx][1]}</span>
                   </div>
                 </div>
               </div>
               <div className={[`${styles.flipbox}`]}>
-                <div className={[`${styles.flipboxInner} flippableG${num}L2`]}>
+                <div
+                  className={[
+                    `${styles.flipboxInner} flippable flippableG${num}L2`,
+                  ]}
+                >
                   <div
                     className={[`${styles.guessLetter} ${styles.flipboxFront}`]}
                   >
                     {guesses[idx][2]}
                   </div>
-                  <div className={styles.flipboxBack} id={`g${num}l2`}>
+                  <div
+                    className={[`${styles.flipboxBack} tile`]}
+                    id={`g${num}l2`}
+                  >
                     <span className={styles.backLetter}>{guesses[idx][2]}</span>
                   </div>
                 </div>
               </div>
               <div className={[`${styles.flipbox}`]}>
-                <div className={[`${styles.flipboxInner} flippableG${num}L3`]}>
+                <div
+                  className={[
+                    `${styles.flipboxInner} flippable flippableG${num}L3`,
+                  ]}
+                >
                   <div
                     className={[`${styles.guessLetter} ${styles.flipboxFront}`]}
                   >
                     {guesses[idx][3]}
                   </div>
-                  <div className={styles.flipboxBack} id={`g${num}l3`}>
+                  <div
+                    className={[`${styles.flipboxBack} tile`]}
+                    id={`g${num}l3`}
+                  >
                     <span className={styles.backLetter}>{guesses[idx][3]}</span>
                   </div>
                 </div>
               </div>
               <div className={[`${styles.flipbox}`]}>
-                <div className={[`${styles.flipboxInner} flippableG${num}L4`]}>
+                <div
+                  className={[
+                    `${styles.flipboxInner} flippable flippableG${num}L4`,
+                  ]}
+                >
                   <div
                     className={[`${styles.guessLetter} ${styles.flipboxFront}`]}
                   >
                     {guesses[idx][4]}
                   </div>
-                  <div className={styles.flipboxBack} id={`g${num}l4`}>
+                  <div
+                    className={[`${styles.flipboxBack} tile`]}
+                    id={`g${num}l4`}
+                  >
                     <span className={styles.backLetter}>{guesses[idx][4]}</span>
                   </div>
                 </div>

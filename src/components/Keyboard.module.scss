@@ -14,11 +14,11 @@
   justify-content: space-evenly;
 }
 
-.button,
-.button:hover,
-.button:active,
-.button:focus,
-.button:visited {
+.key,
+.key:hover,
+.key:active,
+.key:focus,
+.key:visited {
   height: 56px;
   min-width: 42px;
   margin-top: 5px;
@@ -27,6 +27,7 @@
   background-color: var(--light-gray);
   border: none;
   outline: none;
+  font-size: x-large;
   font-weight: 600;
   color: black;
   @media screen and (max-width: $breakpoint-small) {
