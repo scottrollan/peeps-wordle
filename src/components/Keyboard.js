@@ -132,6 +132,7 @@ export default function Keyboard({
               key={`${btn.val}${idx}`}
               value={btn.val}
               id={btn.code}
+              data-state=""
               style={{
                 backgroundColor:
                   btn.val === 'enter' || btn.val === 'backspace'
@@ -145,7 +146,6 @@ export default function Keyboard({
                     : 'key'
                 }`,
               ]}
-              data-state=""
               onClick={(e) => handleChange(e.target, btn.code)}
             >
               {btn.html ? btn.html : btn.val}

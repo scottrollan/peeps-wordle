@@ -62,31 +62,31 @@ const isAWord = (gss, ans, guessIndex, setEndModalShow) => {
 
   guessArray.forEach((l, i) => {
     //find all "correct"
-    const currentBG = $(`#Key${l.ltr}`).css('background-color');
+    const currentState = $(`#Key${l.ltr}`).attr('data-state');
+    console.log(`Current state of ${l.ltr} is ${currentState}`);
     if (answerArray[i] === l.ltr) {
       answerArray[i] = '*';
       guessArray[i].dataState = 'correct';
       $(`#Key${l.ltr}`).attr('data-state', 'correct');
-      $(`#g${guessIndex}l${i}`).css('background-color', 'var(--green');
-    } else if (
-      //else if the background is not already green or yellow
-      currentBG !== 'rgb(201, 180, 88)' &&
-      currentBG !== 'rgb(106, 170, 100)'
-    ) {
-      $(`#Key${l.ltr}`).attr('data-state', 'absent');
+      $(`#Key${l.ltr}`).css('background-color', 'var(--green)');
+      $(`#g${guessIndex}l${i}`).css('background-color', 'var(--green)');
+    } else if (currentState !== 'correct' && currentState !== 'present') {
+      $(`#Key${l.ltr}`).css('background-color', 'var(--dark-gray)');
     }
   });
   //then find "present"
   guessArray.forEach((l, i) => {
+    const currentState = $(`#Key${l.ltr}`).attr('data-state');
     if (l.dataState === '') {
       const found = answerArray.find((a) => a === l.ltr);
       if (found) {
         const fIndex = answerArray.indexOf(found);
         answerArray[fIndex] = '*';
         $(`#g${guessIndex}l${i}`).css('background-color', 'var(--puke-yellow');
-        const currentBG = $(`#Key${l.ltr}`).css('background-color');
-        if (currentBG !== 'rgb(106, 170, 100)') {
+        guessArray[i].dataState = 'present';
+        if (currentState !== 'correct') {
           $(`#Key${l.ltr}`).attr('data-state', 'present');
+          $(`#Key${l.ltr}`).css('background-color', 'var(--puke-yellow');
         }
       }
     }
@@ -145,10 +145,9 @@ export const startOver = (
   setEndModalShow
 ) => {
   $('.tile').css('background-color', 'var(--dark-gray)');
-  // $(`.flippable`).css('transform', 'rotateY(-180deg)');
   $(`.flippable`).css('transform', 'initial');
   $('.key').attr('data-state', '');
-  $('.key').css('background-color', 'var(--light-gray');
+  $('.key').css('background-color', 'var(--light-gray)');
   setEndModalShow(false);
   setGuesses([
     ['', '', '', '', ''],
