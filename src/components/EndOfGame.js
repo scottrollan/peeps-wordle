@@ -1,8 +1,17 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
-import styles from './EndOfGame.module.scss';
+import { shareResults } from '../functions/ShareResults';
+import './EndOfGame.css';
 
-export default function EndOfGame({ show, peep, setShow, answer, newGame }) {
+export default function EndOfGame({
+  show,
+  peep,
+  setShow,
+  answer,
+  newGame,
+  guesses,
+  guessIndex,
+}) {
   return (
     <Modal
       show={show}
@@ -11,26 +20,51 @@ export default function EndOfGame({ show, peep, setShow, answer, newGame }) {
     >
       <Modal.Header closeButton>
         <span id="endGreet"></span>
-        {peep}, the word was {answer}
+        The word was {answer}
         <span id="endMiddle"></span>
         <span></span>
         <span id="endClose"></span>
       </Modal.Header>
 
       <Modal.Body>
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <p>
-            Later on, I'll make a stats thingie that we can all share with each
-            other and restart the game for you. For now, you can play again by
-            clicking here:{' '}
-            <Button variant="secondary" onClick={() => newGame()}>
-              Play Again
-            </Button>
-          </p>
+        <p style={{ display: guessIndex < 6 ? 'inherit' : 'none' }}>
+          You got it in {guessIndex} attempts.
+        </p>
+        <p style={{ display: guessIndex < 3 ? 'inherit' : 'none' }}>
+          That's one for the record books, {peep}!!
+        </p>
+        <p style={{ display: guessIndex === 3 ? 'inherit' : 'none' }}>
+          Excellent Work! A true master you are.
+        </p>
+        <p style={{ display: guessIndex === 4 ? 'inherit' : 'none' }}>
+          Good work, {peep}.
+        </p>
+        <p style={{ display: guessIndex === 5 ? 'inherit' : 'none' }}>
+          Keep on Peepin'!
+        </p>
+        <p style={{ display: guessIndex === 6 ? 'inherit' : 'none' }}>
+          <i className="fad fa-grimace fa-7x"></i>
+        </p>
 
-          <p>... but if you want to share, just screenshoot (?) for now.</p>
-        </div>
+        <div id="shareDiv"></div>
+        <div id="imageContainer"></div>
+        <Button variant="secondary" onClick={() => newGame()}>
+          Play Again
+        </Button>
       </Modal.Body>
+
+      <Modal.Footer>
+        <Button
+          variant="success"
+          onClick={() => shareResults(peep, guessIndex, guesses, answer)}
+        >
+          Share
+          <i className="far fa-share-alt"></i>
+        </Button>
+        <span>
+          <i class="fas fa-hand-point-left"></i>&nbsp;under construction
+        </span>
+      </Modal.Footer>
     </Modal>
   );
 }

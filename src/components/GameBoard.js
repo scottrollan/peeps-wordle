@@ -1,6 +1,5 @@
 import React from 'react';
 import Keyboard from './Keyboard';
-import { Overlay, Tooltip } from 'react-bootstrap';
 import styles from './GameBoard.module.scss';
 import './GameBoard.css';
 

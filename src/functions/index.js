@@ -63,7 +63,6 @@ const isAWord = (gss, ans, guessIndex, setEndModalShow) => {
   guessArray.forEach((l, i) => {
     //find all "correct"
     const currentState = $(`#Key${l.ltr}`).attr('data-state');
-    console.log(`Current state of ${l.ltr} is ${currentState}`);
     if (answerArray[i] === l.ltr) {
       answerArray[i] = '*';
       guessArray[i].dataState = 'correct';
@@ -106,28 +105,36 @@ export const checkWord = (
   setGuessIndex,
   setEndModalShow
 ) => {
-  //check if in dictionary
-  const config = {
-    method: 'get',
-    url: `https://dictionaryapi.com/api/v3/references/collegiate/json/${gss}?key=${REACT_APP_MW_KEY}`,
-  };
-  let data;
-  try {
-    axios(config)
-      .then((response) => {
-        data = response.data[0];
-      })
-      .then(() => {
-        if (typeof data === 'object') {
-          isAWord(gss, ans, guessIndex, setEndModalShow);
-          let plusOne = guessIndex + 1;
-          setGuessIndex(plusOne);
-        } else {
-          isNotAWord(gss, guessIndex, setEndModalShow);
-        }
-      });
-  } catch (error) {
-    console.log(error.message);
+  switch (gss) {
+    case ans:
+      isAWord(gss, ans, guessIndex, setEndModalShow);
+      let plusOne = guessIndex + 1;
+      setGuessIndex(plusOne);
+      break;
+    default:
+      //check if in dictionary
+      const config = {
+        method: 'get',
+        url: `https://dictionaryapi.com/api/v3/references/collegiate/json/${gss}?key=${REACT_APP_MW_KEY}`,
+      };
+      let data;
+      try {
+        axios(config)
+          .then((response) => {
+            data = response.data[0];
+          })
+          .then(() => {
+            if (typeof data === 'object') {
+              isAWord(gss, ans, guessIndex, setEndModalShow);
+              let plusOne = guessIndex + 1;
+              setGuessIndex(plusOne);
+            } else {
+              isNotAWord(gss, guessIndex, setEndModalShow);
+            }
+          });
+      } catch (error) {
+        console.log(error.message);
+      }
   }
 };
 
@@ -135,31 +142,4 @@ export const randomWord = () => {
   const maxIdx = words.length - 1;
   const wordIndex = Math.floor(Math.random() * maxIdx);
   return words[wordIndex];
-};
-
-export const startOver = (
-  setAnswer,
-  setGuesses,
-  guessIndex,
-  setGuessIndex,
-  setEndModalShow
-) => {
-  $('.tile').css('background-color', 'var(--dark-gray)');
-  $(`.flippable`).css('transform', 'initial');
-  $('.key').attr('data-state', '');
-  $('.key').css('background-color', 'var(--light-gray)');
-  setEndModalShow(false);
-  setGuesses([
-    ['', '', '', '', ''],
-    ['', '', '', '', ''],
-    ['', '', '', '', ''],
-    ['', '', '', '', ''],
-    ['', '', '', '', ''],
-    ['', '', '', '', ''],
-  ]);
-  const secretWord = randomWord();
-  const wordle = secretWord.toUpperCase();
-  setAnswer(wordle);
-  console.log(wordle);
-  setGuessIndex(0);
 };

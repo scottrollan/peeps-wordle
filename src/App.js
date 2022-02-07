@@ -6,7 +6,8 @@ import EndOfGame from './components/EndOfGame';
 import $ from 'jquery';
 import { peeps } from './data/Peeps';
 import { randomWord } from './functions/index';
-import { checkWord, startOver } from './functions/index';
+import { checkWord } from './functions/index';
+import { startOver } from './functions/StartOver';
 import logo from './assets/pwLogo.png';
 import styles from './App.module.scss';
 
@@ -73,6 +74,8 @@ function App() {
         setShow={setEndModalShow}
         answer={answer}
         newGame={newGame}
+        guesses={guesses}
+        guessIndex={guessIndex}
       />
       <div className={styles.header}>
         <img src={logo} className={styles.logo} alt="logo" />

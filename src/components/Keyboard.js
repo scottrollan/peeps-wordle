@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { Button } from 'react-bootstrap';
-import $ from 'jquery';
 import styles from './Keyboard.module.scss';
 
 export default function Keyboard({
