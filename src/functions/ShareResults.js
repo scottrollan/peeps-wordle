@@ -43,6 +43,7 @@ export const shareResults = (peep, index, guesses, answer, canWrite) => {
         console.log('Image copied to clipboard.');
         setTimeout(() => $('#imageCopied').css('display', 'flex'), 600);
         setTimeout(() => $('#imageCopied').css('display', 'none'), 1800);
+        $('#shareButton').hide();
       } catch (error) {
         console.log(error.message);
       }
