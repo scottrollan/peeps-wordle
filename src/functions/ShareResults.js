@@ -1,5 +1,6 @@
 import html2canvas from 'html2canvas';
 import $ from 'jquery';
+import { copyImageToClipboard } from 'copy-image-clipboard';
 
 export const shareResults = (peep, index, guesses, answer) => {
   $('#shareDiv').append(`<p>${peep}'s&nbsp;word&nbsp;was&nbsp;${answer}.</p>`);
@@ -27,13 +28,16 @@ export const shareResults = (peep, index, guesses, answer) => {
   const src = document.getElementById('shareDiv');
   html2canvas(src).then(async (canvas) => {
     const imageSrc = canvas.toDataURL('image/png', 1.0);
+    console.log(imageSrc);
     $('#shareDiv').hide();
     $('#imageContainer').append(
       `<img src=${imageSrc} alt='nothing to see' id='shareMe' style="max-width: 80vw;"/>`
     );
-    const img = document.getElementById('imageContainer');
     try {
-      await navigator.ClipboardItem(img);
+      copyImageToClipboard(imageSrc);
+      console.log('Image copied to clipboard.');
+      setTimeout(() => $('#imageCopied').css('display', 'flex'), 600);
+      setTimeout(() => $('#imageCopied').css('display', 'none'), 1800);
     } catch (error) {
       console.log(error.message);
     }

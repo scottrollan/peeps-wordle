@@ -5,6 +5,12 @@
   --dark-gray: #787c7e;
   --purple: #b14877;
 }
+.modalBody {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 #shareDiv {
   width: 232px;
   border-radius: 10%;
@@ -35,15 +41,21 @@
   background-color: var(--dark-gray);
 }
 
-/* @media (pointer: coarse) {
-  #shareDiv {
-    width: 56%;
-  }
-  .shareRow {
-    width: 55%;
-  }
-  .square {
-    width: 10%;
-    height: 10%;
-  }
-} */
+.imageCopied {
+  position: absolute;
+  top: 40%;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 9999;
+  padding: 10px;
+  display: none;
+  justify-content: center;
+}
+.imageCopiedText {
+  background-color: var(--light-gray);
+  color: black;
+  font-weight: 400;
+  padding: 15px 25px;
+  border-radius: 20px;
+}
