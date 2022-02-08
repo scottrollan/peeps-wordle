@@ -2,7 +2,7 @@ import html2canvas from 'html2canvas';
 import $ from 'jquery';
 
 export const shareResults = (peep, index, guesses, answer) => {
-  $('#shareDiv').append(`<p>${peep}'s word was ${answer}.</p>`);
+  $('#shareDiv').append(`<p>${peep}'s&nbsp;word&nbsp;was&nbsp;${answer}.</p>`);
   const ans = answer.split('');
   for (let i = 0; i < index; i++) {
     $('#shareDiv').append(`<div id="row${i}" class="shareRow"></div>`);
