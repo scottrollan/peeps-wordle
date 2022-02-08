@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { shareResults } from '../functions/ShareResults';
-import { canCopyImagesToClipboard } from 'copy-image-clipboard';
+import {
+  canCopyImagesToClipboard,
+  requestClipboardWritePermission,
+} from 'copy-image-clipboard';
 import './EndOfGame.css';
 
 export default function EndOfGame({
@@ -13,9 +16,21 @@ export default function EndOfGame({
   guesses,
   guessIndex,
 }) {
-  const canCopy = canCopyImagesToClipboard();
-  console.log('Can Copy Images To Clipboard:', canCopy);
+  const [canWrite, setCanWrite] = useState(false);
 
+  useEffect(() => {
+    const canCopy = canCopyImagesToClipboard();
+    let writePermission = false;
+    requestClipboardWritePermission()
+      .then((hasPermission) => {
+        writePermission = hasPermission;
+      })
+      .then(() => {
+        if (canCopy && writePermission) {
+          setCanWrite(true);
+        }
+      });
+  }, []);
   return (
     <Modal
       show={show}
@@ -68,9 +83,9 @@ export default function EndOfGame({
           id="shareButton"
           variant="success"
           onClick={() =>
-            shareResults(peep, guessIndex, guesses, answer, canCopy)
+            shareResults(peep, guessIndex, guesses, answer, canWrite)
           }
-          style={{ display: canCopy ? 'flex' : 'none' }}
+          style={{ display: canWrite ? 'flex' : 'none' }}
         >
           Share
           <i className="far fa-share-alt"></i>

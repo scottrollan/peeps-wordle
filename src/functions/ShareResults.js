@@ -5,7 +5,7 @@ import {
   requestClipboardWritePermission,
 } from 'copy-image-clipboard';
 
-export const shareResults = (peep, index, guesses, answer, canCopy) => {
+export const shareResults = (peep, index, guesses, answer, canWrite) => {
   $('#shareDiv').append(`<p>${peep}'s&nbsp;word&nbsp;was&nbsp;${answer}.</p>`);
   const ans = answer.split('');
   for (let i = 0; i < index; i++) {
@@ -36,12 +36,10 @@ export const shareResults = (peep, index, guesses, answer, canCopy) => {
     $('#imageContainer').append(
       `<img src=${imageSrc} alt='nothing to see' id='shareMe' style="max-width: 80vw;"/>`
     );
-    if (canCopy) {
+    if (canWrite) {
       try {
-        requestClipboardWritePermission().then((hasPermission) => {
-          console.log('Has Permission:', hasPermission);
-          copyImageToClipboard(imageSrc);
-        });
+        copyImageToClipboard(imageSrc);
+
         console.log('Image copied to clipboard.');
         setTimeout(() => $('#imageCopied').css('display', 'flex'), 600);
         setTimeout(() => $('#imageCopied').css('display', 'none'), 1800);
