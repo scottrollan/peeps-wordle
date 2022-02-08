@@ -1,6 +1,7 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { shareResults } from '../functions/ShareResults';
+import { canCopyImagesToClipboard } from 'copy-image-clipboard';
 import './EndOfGame.css';
 
 export default function EndOfGame({
@@ -12,6 +13,9 @@ export default function EndOfGame({
   guesses,
   guessIndex,
 }) {
+  const canCopy = canCopyImagesToClipboard();
+  console.log('Can Copy Images To Clipboard:', canCopy);
+
   return (
     <Modal
       show={show}
@@ -61,11 +65,15 @@ export default function EndOfGame({
 
       <Modal.Footer>
         <Button
+          id="shareButton"
           variant="success"
-          onClick={() => shareResults(peep, guessIndex, guesses, answer)}
+          onClick={() =>
+            shareResults(peep, guessIndex, guesses, answer, canCopy)
+          }
+          style={{ display: canCopy ? 'flex' : 'none' }}
         >
           Share
-          <i id="shareButton" className="far fa-share-alt"></i>
+          <i className="far fa-share-alt"></i>
         </Button>
       </Modal.Footer>
     </Modal>
