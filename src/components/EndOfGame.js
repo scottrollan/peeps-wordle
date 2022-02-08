@@ -65,11 +65,8 @@ export default function EndOfGame({
           onClick={() => shareResults(peep, guessIndex, guesses, answer)}
         >
           Share
-          <i className="far fa-share-alt"></i>
+          <i id="shareButton" className="far fa-share-alt"></i>
         </Button>
-        <span>
-          <i class="fas fa-hand-point-left"></i>&nbsp;under construction
-        </span>
       </Modal.Footer>
     </Modal>
   );
