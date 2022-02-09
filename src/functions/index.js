@@ -7,10 +7,20 @@ const { REACT_APP_MW_KEY } = process.env;
 
 const axios = require('axios');
 
-const populateEndModal = (params) => {
+const populateEndModal = (params, iWon) => {
   const { peep, answer, guessIndex, guesses, setShareableImage } = params;
 
-  $('#shareDiv').append(`<p>${peep}'s&nbsp;word&nbsp;was&nbsp;${answer}.</p>`);
+  if (iWon) {
+    $('#shareDiv').append(
+      `<p>${peep}&nbsp;got&nbsp;"${answer}"</p><p>in&nbsp;${
+        guessIndex + 1
+      }&nbsp;attempts.</p>`
+    );
+  } else {
+    $('#shareDiv').append(
+      `<p>${peep}&nbsp;bombed&nbsp;on&nbsp;"${answer}".</p>`
+    );
+  }
   const ans = answer.split('');
   for (let i = 0; i < guessIndex + 1; i++) {
     $('#shareDiv').append(`<div id="row${i}" class="shareRow"></div>`);
@@ -33,7 +43,7 @@ const populateEndModal = (params) => {
     });
   }
   const src = document.getElementById('shareDiv');
-  html2canvas(src).then(async (canvas) => {
+  html2canvas(src).then((canvas) => {
     const imageSrc = canvas.toDataURL('image/png', 1.0);
     setShareableImage(imageSrc);
     $('#shareDiv').hide();
@@ -59,21 +69,21 @@ export const shareResults = (canWrite, imageSrc) => {
 
 const youWin = (params) => {
   setTimeout(() => params.setEndModalShow(true), 2000);
-  //trigger a "not a word" effect in GameBoard
   $('#tooltipText').text('...YOU WIN...');
   setTimeout(() => $('#tooltip').css('display', 'flex'), 900);
   setTimeout(() => {
     $('#tooltip').css('display', 'none');
-    populateEndModal(params);
+    populateEndModal(params, true);
   }, 2000);
 };
 
 const youLose = (params) => {
+  setTimeout(() => params.setEndModalShow(true), 2000);
   $('#tooltipText').text('Shucks!');
   setTimeout(() => $('#tooltip').css('display', 'flex'), 900);
   setTimeout(() => {
     $('#tooltip').css('display', 'none');
-    populateEndModal(params);
+    populateEndModal(params, false);
   }, 2000);
 };
 

@@ -33,24 +33,6 @@ export default function EndOfGame(props) {
 
       <Modal.Body>
         <div className="modalBody">
-          <p style={{ display: guessIndex < 6 ? 'inherit' : 'none' }}>
-            You got it in {guessIndex} attempts.
-          </p>
-          <p style={{ display: guessIndex < 3 ? 'inherit' : 'none' }}>
-            That's one for the record books, {peep}!!
-          </p>
-          <p style={{ display: guessIndex === 3 ? 'inherit' : 'none' }}>
-            Excellent Work! A true master you are.
-          </p>
-          <p style={{ display: guessIndex === 4 ? 'inherit' : 'none' }}>
-            Good work, {peep}.
-          </p>
-          <p style={{ display: guessIndex === 5 ? 'inherit' : 'none' }}>
-            Keep on Peepin'!
-          </p>
-          <p style={{ display: guessIndex === 6 ? 'inherit' : 'none' }}>
-            <i className="fad fa-grimace fa-7x"></i>
-          </p>
           <Button variant="secondary" onClick={() => newGame()}>
             Play Again
           </Button>
