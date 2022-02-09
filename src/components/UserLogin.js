@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { UserContext } from '../App';
 import { Modal, DropdownButton, Dropdown, Button } from 'react-bootstrap';
 
-export default function UserLogin({ show, setShow, peep, setPeep, peeps }) {
+export default function UserLogin({ show, setShow, setPeep, peeps }) {
   const userTrue = () => {
     setShow(false);
   };
   const setMyName = (name) => {
     setPeep(name);
   };
+  const peep = useContext(UserContext);
   return (
     <Modal show={show} dialogClassName="modal-90h">
       <Modal.Header>

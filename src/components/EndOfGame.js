@@ -1,36 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext } from 'react';
+import { UserContext } from '../App';
 import { Modal, Button } from 'react-bootstrap';
-import { shareResults } from '../functions/ShareResults';
-import {
-  canCopyImagesToClipboard,
-  requestClipboardWritePermission,
-} from 'copy-image-clipboard';
+import { shareResults } from '../functions/index';
 import './EndOfGame.css';
 
-export default function EndOfGame({
-  show,
-  peep,
-  setShow,
-  answer,
-  newGame,
-  guesses,
-  guessIndex,
-}) {
-  const [canWrite, setCanWrite] = useState(false);
+export default function EndOfGame(props) {
+  const {
+    show,
+    setShow,
+    answer,
+    guessIndex,
+    newGame,
+    canWrite,
+    shareableImage,
+  } = props;
 
-  useEffect(() => {
-    const canCopy = canCopyImagesToClipboard();
-    let writePermission = false;
-    requestClipboardWritePermission()
-      .then((hasPermission) => {
-        writePermission = hasPermission;
-      })
-      .then(() => {
-        if (canCopy && writePermission) {
-          setCanWrite(true);
-        }
-      });
-  }, []);
+  const peep = useContext(UserContext);
+
   return (
     <Modal
       show={show}
@@ -82,9 +68,7 @@ export default function EndOfGame({
         <Button
           id="shareButton"
           variant="success"
-          onClick={() =>
-            shareResults(peep, guessIndex, guesses, answer, canWrite)
-          }
+          onClick={() => shareResults(canWrite, shareableImage)}
           style={{ display: canWrite ? 'flex' : 'none' }}
         >
           Share
