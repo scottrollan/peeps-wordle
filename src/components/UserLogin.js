@@ -48,13 +48,22 @@ export default function UserLogin({ show, setShow, setPeep, peeps }) {
           }}
         >
           {peep ? (
-            <Button
-              onClick={() => userTrue()}
-              style={{ visibility: peep ? 'visible' : 'hidden' }}
-              variant="secondary"
+            <div
+              style={{
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
             >
-              {peep}, Click Here To Play Peeps Wordle
-            </Button>
+              <Button
+                onClick={() => userTrue()}
+                style={{ visibility: peep ? 'visible' : 'hidden' }}
+                variant="success"
+              >
+                {peep}, Click Here To Play Peeps Wordle
+              </Button>{' '}
+            </div>
           ) : (
             <>
               <div style={styles.tile}>D</div>
