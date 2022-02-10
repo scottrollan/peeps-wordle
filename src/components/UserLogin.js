@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { UserContext } from '../App';
+import { peepPeepedIn } from '../firestore/index';
 import { Modal, DropdownButton, Dropdown, Button } from 'react-bootstrap';
 
 export default function UserLogin({ show, setShow, setPeep, peeps }) {
@@ -8,7 +9,11 @@ export default function UserLogin({ show, setShow, setPeep, peeps }) {
   };
   const setMyName = (name) => {
     setPeep(name);
+    peepPeepedIn(name);
   };
+
+  const dailyPuzzle = () => {};
+
   const peep = useContext(UserContext);
   return (
     <Modal show={show} dialogClassName="modal-90h">
@@ -52,17 +57,19 @@ export default function UserLogin({ show, setShow, setPeep, peeps }) {
               style={{
                 width: '100%',
                 display: 'flex',
+                flexDirection: 'column',
                 justifyContent: 'center',
                 alignItems: 'center',
+                visibility: peep ? 'visible' : 'hidden',
               }}
             >
-              <Button
-                onClick={() => userTrue()}
-                style={{ visibility: peep ? 'visible' : 'hidden' }}
-                variant="success"
-              >
+              <Button onClick={() => userTrue()} variant="success">
                 {peep}, Click Here To Play Peeps Wordle
-              </Button>{' '}
+              </Button>
+              <div>- OR -</div>
+              <Button disabled onClick={() => dailyPuzzle()} variant="warning">
+                PLAY THE DAILY PEEP
+              </Button>
             </div>
           ) : (
             <>

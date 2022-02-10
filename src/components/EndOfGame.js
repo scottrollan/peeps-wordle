@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { UserContext } from '../App';
 import { Modal, Button } from 'react-bootstrap';
 import { shareResults } from '../functions/index';
+import { peepPeepedIn } from '../firestore/index';
 import './EndOfGame.css';
 
 export default function EndOfGame(props) {
@@ -16,6 +17,11 @@ export default function EndOfGame(props) {
   } = props;
 
   const peep = useContext(UserContext);
+
+  const startNewGame = () => {
+    peepPeepedIn(peep);
+    newGame();
+  };
 
   return (
     <Modal
@@ -33,7 +39,7 @@ export default function EndOfGame(props) {
 
       <Modal.Body>
         <div className="modalBody">
-          <Button variant="secondary" onClick={() => newGame()}>
+          <Button variant="secondary" onClick={() => startNewGame()}>
             Play Again
           </Button>
         </div>
