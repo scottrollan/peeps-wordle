@@ -53,7 +53,7 @@ export const peepPeepedIn = async (peep) => {
 export const dailyWord = async (peep) => {
   let t = new Date();
   const d = t.setHours(0, 0, 0, 0); //so time is always 12am
-  const now = t.getTime(); //converts to milliseconds
+  const today = t.getTime(); //converts to milliseconds
   const ninetyDaysAgo = t - 7776000000;
 
   let words = [];
@@ -62,13 +62,25 @@ export const dailyWord = async (peep) => {
   querySnapshot.forEach((doc) => {
     words.push(doc.data());
   });
+  //determine wheter another use has already initiated the word for today
+  let wordObj = words.find((w) => w.last_used === today);
+  if (wordObj) {
+    selectedWord = {
+      last_used: wordObj.last_used,
+      word: wordObj.word.toUpperCase(),
+    };
+    await updateDoc(doc(db, 'peeps', peep.name), {
+      last_daily_played: d,
+    });
+    return selectedWord;
+  }
   do {
     const maxIdx = words.length - 1;
     const wordIndex = Math.floor(Math.random() * maxIdx);
     selectedWord = words[wordIndex];
   } while (selectedWord.last_used > ninetyDaysAgo);
   await updateDoc(doc(db, 'dailyWords', selectedWord.word), {
-    last_used: now,
+    last_used: today,
   });
 
   await updateDoc(doc(db, 'peeps', peep.name), {
