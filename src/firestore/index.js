@@ -10,6 +10,8 @@ import {
   setDoc,
   increment,
   updateDoc,
+  Timestamp,
+  DocumentSnapshot,
 } from 'firebase/firestore';
 
 const firebaseConfig = {
@@ -28,7 +30,19 @@ const app = initializeApp(firebaseConfig);
 export const db = getFirestore();
 
 //Get my peep info
-export const getPeep = async (db, peep) => {};
+export const getPeep = async (peep) => {
+  await getDoc(doc(db, 'peeps', peep));
+  return DocumentSnapshot.data();
+};
+
+export const getPeeps = async () => {
+  let peeps = [];
+  const querySnapshot = await getDocs(collection(db, 'peeps'));
+  querySnapshot.forEach((doc) => {
+    peeps.push(doc.data());
+  });
+  return peeps;
+};
 
 export const peepPeepedIn = async (peep) => {
   await updateDoc(doc(db, 'peeps', peep), {
@@ -36,6 +50,34 @@ export const peepPeepedIn = async (peep) => {
   });
 };
 
+export const dailyWord = async (peep) => {
+  let t = new Date();
+  const d = t.setHours(0, 0, 0, 0); //so time is always 12am
+  const now = t.getTime(); //converts to milliseconds
+  const ninetyDaysAgo = t - 7776000000;
+
+  let words = [];
+  let selectedWord;
+  const querySnapshot = await getDocs(collection(db, 'dailyWords'));
+  querySnapshot.forEach((doc) => {
+    words.push(doc.data());
+  });
+  do {
+    const maxIdx = words.length - 1;
+    const wordIndex = Math.floor(Math.random() * maxIdx);
+    selectedWord = words[wordIndex];
+  } while (selectedWord.last_used > ninetyDaysAgo);
+  await updateDoc(doc(db, 'dailyWords', selectedWord.word), {
+    last_used: now,
+  });
+
+  await updateDoc(doc(db, 'peeps', peep.name), {
+    last_daily_played: d,
+  });
+  return selectedWord;
+};
+
+////////////////////////////////////////////////
 export const addAPeep = async (data) => {
   await setDoc(doc(db, 'peeps', data.name), {
     name: data.name,
@@ -47,6 +89,9 @@ export const addAPeep = async (data) => {
   });
   console.log(`${data.name} added successully!`);
 };
-export const addAWord = async (data) => {
-  await setDoc(doc(db, 'dailyWords', data.word), { data });
+export const addAWord = async (word) => {
+  await setDoc(doc(db, 'dailyWords', word), {
+    word: word,
+    last_used: 0,
+  });
 };

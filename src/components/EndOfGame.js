@@ -19,7 +19,7 @@ export default function EndOfGame(props) {
   const peep = useContext(UserContext);
 
   const startNewGame = () => {
-    peepPeepedIn(peep);
+    peepPeepedIn(peep.name);
     newGame();
   };
 

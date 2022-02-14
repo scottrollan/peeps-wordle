@@ -59,3 +59,12 @@
   padding: 15px 25px;
   border-radius: 20px;
 }
+.gotDiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+.gotDiv > span {
+  margin-right: 0.5em;
+}

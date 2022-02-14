@@ -8,10 +8,11 @@ import {
   canCopyImagesToClipboard,
   requestClipboardWritePermission,
 } from 'copy-image-clipboard';
-import { peeps } from './data/Peeps';
+// import { peeps } from './data/Peeps';
 import { randomWord } from './functions/index';
 import { checkWord } from './functions/index';
 import { startOver } from './functions/StartOver';
+import { getPeeps } from './firestore/index';
 import logo from './assets/pwLogo.png';
 import styles from './App.module.scss';
 
@@ -30,18 +31,13 @@ function App() {
   ]);
   const [userModalShow, setUserModalShow] = useState(true);
   const [endModalShow, setEndModalShow] = useState(false);
-  const [peep, setPeep] = useState('');
+  const [peep, setPeep] = useState({});
+  const [peeps, setPeeps] = useState([]);
   const [canWrite, setCanWrite] = useState(false);
   const [shareableImage, setShareableImage] = useState();
 
   const newGame = () => {
-    startOver(
-      setAnswer,
-      setGuesses,
-      guessIndex,
-      setGuessIndex,
-      setEndModalShow
-    );
+    startOver(setAnswer, setGuesses, setGuessIndex, setEndModalShow);
   };
 
   const makeGuess = (playerGuess) => {
@@ -52,7 +48,7 @@ function App() {
       guessIndex,
       setGuessIndex,
       setEndModalShow,
-      peep,
+      peep: peep.name,
       guesses,
       canWrite,
       shareableImage,
@@ -93,6 +89,8 @@ function App() {
           setShow={setUserModalShow}
           peeps={peeps}
           setPeep={setPeep}
+          setPeeps={setPeeps}
+          setAnswer={setAnswer}
         />
         <EndOfGame
           show={endModalShow}

@@ -4,7 +4,6 @@ import { words } from '../data/Words';
 export const startOver = (
   setAnswer,
   setGuesses,
-  guessIndex,
   setGuessIndex,
   setEndModalShow
 ) => {

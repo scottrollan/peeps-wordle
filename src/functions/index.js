@@ -12,13 +12,13 @@ const populateEndModal = (params, iWon) => {
 
   if (iWon) {
     $('#shareDiv').append(
-      `<p>${peep}&nbsp;got&nbsp;"${answer}"</p><p>in&nbsp;${
+      `<div class="gotDiv"><span>${peep}</span><span>got</span><span>"${answer}"</span><span>in</span><span>${
         guessIndex + 1
-      }&nbsp;attempts.</p>`
+      }</span><span>attempts.</span></div>`
     );
   } else {
     $('#shareDiv').append(
-      `<p>${peep}&nbsp;bombed&nbsp;on&nbsp;"${answer}".</p>`
+      `<p>${peep}${' '}bombed${' '}on${' '}"${answer}".</p>`
     );
   }
   const ans = answer.split('');
@@ -48,7 +48,7 @@ const populateEndModal = (params, iWon) => {
     setShareableImage(imageSrc);
     $('#shareDiv').hide();
     $('#imageContainer').append(
-      `<img src=${imageSrc} alt='nothing to see' id='shareMe' style="max-width: 80vw;"/>`
+      `<img src=${imageSrc} alt='nothing to see' id='shareMe' style="max-width: 50vw;"/>`
     );
   });
 };
@@ -130,7 +130,7 @@ const vannaWhite = (params, isWinner, isLoser) => {
 };
 
 const isNotAWord = (params) => {
-  const gss = params.gss;
+  const gss = params.playerGuess;
   const guessIndex = params.guessIndex;
   console.log(`${gss} was not in the dictionary`);
   //trigger a "not a word" effect in GameBoard
@@ -191,8 +191,8 @@ const isAWord = (params) => {
 };
 
 export const checkWord = (params) => {
-  switch (params.gss) {
-    case params.ans:
+  switch (true) {
+    case params.playerGuess === params.answer:
       isAWord(params);
       let plusOne = params.guessIndex + 1;
       params.setGuessIndex(plusOne);
@@ -201,7 +201,7 @@ export const checkWord = (params) => {
       //check if in dictionary
       const config = {
         method: 'get',
-        url: `https://dictionaryapi.com/api/v3/references/collegiate/json/${params.gss}?key=${REACT_APP_MW_KEY}`,
+        url: `https://dictionaryapi.com/api/v3/references/collegiate/json/${params.playerGuess}?key=${REACT_APP_MW_KEY}`,
       };
       let data;
       try {
