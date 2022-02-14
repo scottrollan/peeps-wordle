@@ -10,6 +10,7 @@ export default function UserLogin({
   peeps,
   setAnswer,
   setPeeps,
+  setPlayingDaily,
 }) {
   const [playedDailyAlready, setPlayedDailyAlready] = useState(false);
   const peep = useContext(UserContext);
@@ -26,15 +27,18 @@ export default function UserLogin({
   };
 
   const dailyPuzzle = async () => {
-    const wordT = await dailyWord(peep);
-    console.log(wordT.word);
+    const wordT = await dailyWord(peep); //currently lowercase
+    const wordToday = wordT.word.toUpperCase();
+    console.log(wordToday);
     const updatedPeep = { ...peep, last_daily_played: today };
     console.log(`today: ${today}`);
     console.log(`updatedPeep: ${JSON.stringify(updatedPeep)}`);
     if (peep.last_daily_played === today) {
       setPlayedDailyAlready(true);
     }
-    setAnswer(wordT.word);
+    setAnswer(wordToday);
+    setPlayingDaily(true);
+    setShow(false);
   };
 
   const styles = {
@@ -180,8 +184,7 @@ export default function UserLogin({
           <Button
             onClick={() => dailyPuzzle()}
             variant="warning"
-            // disabled={playedDailyAlready}
-            disabled
+            disabled={playedDailyAlready}
           >
             {playedDailyAlready
               ? 'Come back tomorrow for the daily word'

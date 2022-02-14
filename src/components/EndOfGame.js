@@ -14,12 +14,17 @@ export default function EndOfGame(props) {
     newGame,
     canWrite,
     shareableImage,
+    playingDaily,
+    setPlayingDaily,
   } = props;
 
   const peep = useContext(UserContext);
 
   const startNewGame = () => {
     peepPeepedIn(peep.name);
+    if (playingDaily) {
+      setPlayingDaily(false);
+    }
     newGame();
   };
 
@@ -40,7 +45,7 @@ export default function EndOfGame(props) {
       <Modal.Body>
         <div className="modalBody">
           <Button variant="secondary" onClick={() => startNewGame()}>
-            Play Again
+            Play {playingDaily ? 'Regular Peep Wordle' : 'Again'}
           </Button>
         </div>
         <div id="shareDiv"></div>
@@ -53,6 +58,9 @@ export default function EndOfGame(props) {
       </Modal.Body>
 
       <Modal.Footer>
+        <span style={{ display: canWrite ? 'none' : 'flex' }}>
+          Long press the image above to save and share it
+        </span>
         <Button
           id="shareButton"
           variant="success"

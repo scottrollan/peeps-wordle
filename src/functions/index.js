@@ -8,9 +8,22 @@ const { REACT_APP_MW_KEY } = process.env;
 const axios = require('axios');
 
 const populateEndModal = (params, iWon) => {
-  const { peep, answer, guessIndex, guesses, setShareableImage } = params;
+  const {
+    peep,
+    answer,
+    guessIndex,
+    guesses,
+    setShareableImage,
+    playingDaily,
+  } = params;
 
-  if (iWon) {
+  if (iWon && playingDaily) {
+    $('#shareDiv').append(
+      `<div class="gotDiv"><span>${peep}</span><span>got</span><span>the</span><span>Daily</span><span>Word</span><span>in</span><span>${
+        guessIndex + 1
+      }</span><span>attempts.</span></div>`
+    );
+  } else if (iWon) {
     $('#shareDiv').append(
       `<div class="gotDiv"><span>${peep}</span><span>got</span><span>"${answer}"</span><span>in</span><span>${
         guessIndex + 1

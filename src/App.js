@@ -35,6 +35,7 @@ function App() {
   const [peeps, setPeeps] = useState([]);
   const [canWrite, setCanWrite] = useState(false);
   const [shareableImage, setShareableImage] = useState();
+  const [playingDaily, setPlayingDaily] = useState(false);
 
   const newGame = () => {
     startOver(setAnswer, setGuesses, setGuessIndex, setEndModalShow);
@@ -53,6 +54,7 @@ function App() {
       canWrite,
       shareableImage,
       setShareableImage,
+      playingDaily,
     };
     switch (guessLength) {
       case 5:
@@ -91,6 +93,7 @@ function App() {
           setPeep={setPeep}
           setPeeps={setPeeps}
           setAnswer={setAnswer}
+          setPlayingDaily={setPlayingDaily}
         />
         <EndOfGame
           show={endModalShow}
@@ -101,6 +104,8 @@ function App() {
           guessIndex={guessIndex}
           canWrite={canWrite}
           shareableImage={shareableImage}
+          playingDaily={playingDaily}
+          setPlayingDaily={setPlayingDaily}
         />
         <div className={styles.header}>
           <img src={logo} className={styles.logo} alt="logo" />
