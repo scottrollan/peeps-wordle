@@ -4,6 +4,20 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+//prevent accidental zoom in on quick inputs
+const lastTouchEnd = 0;
+document.addEventListener(
+  'touchend',
+  function (event) {
+    var now = new Date().getTime();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  },
+  false
+);
+
 ReactDOM.render(
   <React.StrictMode>
     <App />

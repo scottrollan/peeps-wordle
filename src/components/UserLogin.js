@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../App';
 import { peepPeepedIn, dailyWord, getPeeps } from '../firestore/index';
 import { Modal, DropdownButton, Dropdown, Button } from 'react-bootstrap';
+import styles from './UserLogin.module.scss';
 
 export default function UserLogin({
   show,
@@ -41,7 +42,7 @@ export default function UserLogin({
     setShow(false);
   };
 
-  const styles = {
+  const moreStyles = {
     instructions: {
       display: peep.name ? 'none' : 'flex',
       flexDirection: 'column',
@@ -117,6 +118,9 @@ export default function UserLogin({
     whichPeep: {
       visibility: peep.name ? 'hidden' : 'visible',
     },
+    whichPeepButton: {
+      backgroundColor: 'var(--purple)',
+    },
   };
 
   useEffect(() => {
@@ -137,46 +141,46 @@ export default function UserLogin({
       <Modal.Body>
         <p>
           After each guess the color of the tiles will change to show how close
-          your guess was to the word.
+          you got.
         </p>
         <hr style={{ borderTop: '1px solid black' }} />
-        <div style={styles.instructions}>
+        <div style={moreStyles.instructions}>
           <h5>Examples</h5>
-          <div style={styles.letters}>
-            <div style={styles.greenTile}>W</div>
-            <div style={styles.tile}>H</div>
-            <div style={styles.tile}>I</div>
-            <div style={styles.tile}>S</div>
-            <div style={styles.tile}>K</div>
+          <div style={moreStyles.letters}>
+            <div style={moreStyles.greenTile}>W</div>
+            <div style={moreStyles.tile}>H</div>
+            <div style={moreStyles.tile}>I</div>
+            <div style={moreStyles.tile}>S</div>
+            <div style={moreStyles.tile}>K</div>
           </div>
           <p>
             The letter <strong>W</strong> is in the word and in the correct
             spot.
           </p>
-          <div style={styles.letters}>
+          <div style={moreStyles.letters}>
             <>
-              <div style={styles.tile}>D</div>
-              <div style={styles.yellowTile}>A</div>
-              <div style={styles.tile}>I</div>
-              <div style={styles.tile}>S</div>
-              <div style={styles.tile}>Y</div>{' '}
+              <div style={moreStyles.tile}>D</div>
+              <div style={moreStyles.yellowTile}>A</div>
+              <div style={moreStyles.tile}>I</div>
+              <div style={moreStyles.tile}>S</div>
+              <div style={moreStyles.tile}>Y</div>{' '}
             </>
           </div>
           <p>
             The letter <strong>A</strong> is in the word but in the wrong spot.
           </p>
-          <div style={styles.letters}>
-            <div style={styles.tile}>T</div>
-            <div style={styles.tile}>A</div>
-            <div style={styles.tile}>T</div>
-            <div style={styles.grayTile}>E</div>
-            <div style={styles.tile}>R</div>
+          <div style={moreStyles.letters}>
+            <div style={moreStyles.tile}>T</div>
+            <div style={moreStyles.tile}>A</div>
+            <div style={moreStyles.tile}>T</div>
+            <div style={moreStyles.grayTile}>E</div>
+            <div style={moreStyles.tile}>R</div>
           </div>
           <p>
             The letter <strong>E</strong> is not in the word in any spot.
           </p>
         </div>
-        <div style={styles.buttons}>
+        <div style={moreStyles.buttons}>
           <Button onClick={() => userTrue()} variant="success">
             {peep.name}, Click Here To Play Peeps Wordle
           </Button>
@@ -193,12 +197,12 @@ export default function UserLogin({
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <div style={styles.peepSelect}>
-          <div style={styles.whichPeep}>Which peep are you?</div>
+        <div style={moreStyles.peepSelect}>
+          <div style={moreStyles.whichPeep}>Which peep are you?</div>
           <DropdownButton
-            variant="secondary"
             title={`I Am ${peep.name ? peep.name : '...'}`}
             drop="start"
+            className={styles.whichPeepButton}
           >
             {peeps.map((p) => {
               return (

@@ -1,0 +1,6 @@
+@import '../styles/custom-properties.module.scss';
+
+.whichPeepButton > button {
+  border-color: var(--purple);
+  background-color: var(--purple);
+}
