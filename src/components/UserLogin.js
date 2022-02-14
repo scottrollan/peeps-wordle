@@ -198,7 +198,7 @@ export default function UserLogin({
           <DropdownButton
             variant="secondary"
             title={`I Am ${peep.name ? peep.name : '...'}`}
-            direction="up"
+            drop="start"
           >
             {peeps.map((p) => {
               return (

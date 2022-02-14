@@ -14,8 +14,10 @@ import {
   DocumentSnapshot,
 } from 'firebase/firestore';
 
+const { REACT_APP_MW_KEY } = process.env;
+
 const firebaseConfig = {
-  apiKey: 'AIzaSyBbha4TtforFWBnSbs0h7l08hpW8zuebVI',
+  apiKey: REACT_APP_MW_KEY,
   authDomain: 'peeps-wordle.firebaseapp.com',
   projectId: 'peeps-wordle',
   storageBucket: 'peeps-wordle.appspot.com',
