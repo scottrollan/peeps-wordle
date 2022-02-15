@@ -49,6 +49,7 @@ export const getPeeps = async () => {
 export const peepPeepedIn = async (peep) => {
   await updateDoc(doc(db, 'peeps', peep), {
     peeped_in: increment(1),
+    games_forfeited: increment(1),
   });
 };
 

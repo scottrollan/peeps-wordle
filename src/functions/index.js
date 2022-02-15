@@ -7,6 +7,12 @@ const { REACT_APP_MW_KEY } = process.env;
 
 const axios = require('axios');
 
+const n = new Date();
+var month = n.getUTCMonth() + 1; //months from 1-12
+var day = n.getUTCDate();
+var year = n.getUTCFullYear();
+const todaysDate = `${month}/${day}/${year}`;
+
 const populateEndModal = (params, iWon) => {
   const {
     peep,
@@ -19,9 +25,9 @@ const populateEndModal = (params, iWon) => {
 
   if (iWon && playingDaily) {
     $('#shareDiv').append(
-      `<div class="gotDiv"><span>${peep}</span><span>got</span><span>the</span><span>Daily</span><span>Word</span><span>in</span><span>${
+      `<div class="gotDiv"><span>${
         guessIndex + 1
-      }</span><span>attempts.</span></div>`
+      }/6</span><span>${todaysDate}</span></div>`
     );
   } else if (iWon) {
     $('#shareDiv').append(
@@ -147,7 +153,7 @@ const isNotAWord = (params) => {
   const guessIndex = params.guessIndex;
   console.log(`${gss} was not in the dictionary`);
   //trigger a "not a word" effect in GameBoard
-  $('#tooltipText').text('...Not a word...');
+  $('#tooltipText').text('...Not a MW word...');
   $(`.shakeableG${guessIndex}`).addClass('shake');
   $('#tooltip').css('display', 'flex');
   setTimeout(() => $('#tooltip').css('display', 'none'), 1600);
