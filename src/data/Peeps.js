@@ -1,4 +1,5 @@
 export const peeps = [
+  { name: 'guest' },
   { name: 'Sharon' },
   { name: 'Ralph' },
   { name: 'Pierrette' },

@@ -1439,7 +1439,6 @@ export const words = [
   'swept',
   'swift',
   'swing',
-  'swiss',
   'sword',
   'syrup',
   'table',
