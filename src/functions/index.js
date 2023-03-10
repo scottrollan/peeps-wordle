@@ -1,7 +1,7 @@
 import html2canvas from 'html2canvas';
 import { copyImageToClipboard } from 'copy-image-clipboard';
 import $ from 'jquery';
-import { words } from '../data/Words';
+// import { words } from '../data/Words';
 
 const { REACT_APP_MW_KEY } = process.env;
 
@@ -14,32 +14,30 @@ var year = n.getUTCFullYear();
 const todaysDate = `${month}/${day}/${year}`;
 
 const populateEndModal = (params, iWon) => {
-  const {
-    peep,
-    answer,
-    guessIndex,
-    guesses,
-    setShareableImage,
-    playingDaily,
-  } = params;
+  const { peep, answer, guessIndex, guesses, setShareableImage, playingDaily } =
+    params;
 
-  if (iWon && playingDaily) {
-    $('#shareDiv').append(
-      `<div class="gotDiv"><span>${
-        guessIndex + 1
-      }/6</span><span>${todaysDate}</span></div>`
-    );
-  } else if (iWon) {
-    $('#shareDiv').append(
-      `<div class="gotDiv"><span>${peep}</span><span>got</span><span>"${answer}"</span><span>in</span><span>${
-        guessIndex + 1
-      }</span><span>attempts.</span></div>`
-    );
-  } else {
-    $('#shareDiv').append(
-      `<p>${peep}${' '}bombed${' '}on${' '}"${answer}".</p>`
-    );
+  switch (true) {
+    case iWon && playingDaily:
+      $('#shareDiv').append(
+        `<p style='display: flex; justify-content: space-between;'><span>${
+          guessIndex + 1
+        }/6</span><span>${todaysDate}</span></p>`
+      );
+      break;
+    case iWon:
+      $('#shareDiv').append(
+        `<p>${peep} got '${answer}' in ${guessIndex + 1} attempts.</p>`
+      );
+      break;
+    case !iWon && playingDaily:
+      $('#shareDiv').append(`<p>${peep} bombed on today's PeepsWord.</p>`);
+      break;
+    default:
+      $('#shareDiv').append(`<p>${peep} bombed on "${answer}".</p>`);
+      break;
   }
+
   const ans = answer.split('');
   for (let i = 0; i < guessIndex + 1; i++) {
     $('#shareDiv').append(`<div id="row${i}" class="shareRow"></div>`);
@@ -160,21 +158,30 @@ const isNotAWord = (params) => {
 };
 
 const isAWord = (params) => {
-  const gss = params.playerGuess;
-  const ans = params.answer;
   const guessIndex = params.guessIndex;
-
-  const answerArray = ans.toUpperCase().split('');
-  let guessArray = [];
+  let thisRow = {};
+  let newSquares;
+  for (let i = 1; i <= 5; i++) {
+    let sq = `r${guessIndex + 1}L${i}`;
+    thisRow = { ...thisRow, [sq]: 'dark' };
+  }
+  params.setSquares({ ...params.squares, ...thisRow });
+  const gss = params.playerGuess;
   const guessSplit = gss.split('');
+  let guessArray = [];
   guessSplit.forEach((g) => {
     guessArray.push({ ltr: g, dataState: '' });
   });
+  const ans = params.answer;
+  const answerArray = ans.toUpperCase().split('');
 
   guessArray.forEach((l, i) => {
-    //find all "correct"
+    const thisSquare = `r${guessIndex + 1}L${i + 1}`; //ex: 1_3 or 4_1
+    //find all "correct letters in correct position"
     const currentState = $(`#Key${l.ltr}`).attr('data-state');
     if (answerArray[i] === l.ltr) {
+      // newCorrectLetters.push(l.ltr);
+      thisRow = { ...thisRow, [thisSquare]: 'green' };
       answerArray[i] = '*';
       guessArray[i].dataState = 'correct';
       $(`#Key${l.ltr}`).attr('data-state', 'correct');
@@ -187,20 +194,27 @@ const isAWord = (params) => {
   //then find "present"
   guessArray.forEach((l, i) => {
     const currentState = $(`#Key${l.ltr}`).attr('data-state');
+    const thisSquare = `r${guessIndex + 1}L${i + 1}`; //ex: 1_3 or 4_1
     if (l.dataState === '') {
       const found = answerArray.find((a) => a === l.ltr);
       if (found) {
+        // newCorrectLetters.push(l.ltr);
         const fIndex = answerArray.indexOf(found);
         answerArray[fIndex] = '*';
         $(`#g${guessIndex}l${i}`).css('background-color', 'var(--puke-yellow');
         guessArray[i].dataState = 'present';
+        thisRow = { ...thisRow, [thisSquare]: 'yellow' };
+
         if (currentState !== 'correct') {
           $(`#Key${l.ltr}`).attr('data-state', 'present');
           $(`#Key${l.ltr}`).css('background-color', 'var(--puke-yellow');
         }
       }
     }
+    newSquares = { ...params.squares, ...thisRow };
+    params.setSquares({ ...params.squares, ...thisRow });
   });
+
   const iWon = ans === gss;
   let iLost;
   if (!iWon && guessIndex === 5) {
@@ -211,13 +225,14 @@ const isAWord = (params) => {
 
 export const checkWord = (params) => {
   switch (true) {
+    //if player guess is the correct answer
     case params.playerGuess === params.answer:
       isAWord(params);
       let plusOne = params.guessIndex + 1;
       params.setGuessIndex(plusOne);
       break;
     default:
-      //check if in dictionary
+      //otherwise, check if in dictionary then proceed
       const config = {
         method: 'get',
         url: `https://dictionaryapi.com/api/v3/references/collegiate/json/${params.playerGuess}?key=${REACT_APP_MW_KEY}`,
@@ -241,10 +256,4 @@ export const checkWord = (params) => {
         console.log(error.message);
       }
   }
-};
-
-export const randomWord = () => {
-  const maxIdx = words.length - 1;
-  const wordIndex = Math.floor(Math.random() * maxIdx);
-  return words[wordIndex];
 };

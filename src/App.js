@@ -1,4 +1,5 @@
 import React, { useState, useEffect, createContext } from 'react';
+// import { Form } from 'react-bootstrap';
 import Div100vh from 'react-div-100vh';
 import UserLogin from './components/UserLogin';
 import GameBoard from './components/GameBoard';
@@ -8,11 +9,9 @@ import {
   canCopyImagesToClipboard,
   requestClipboardWritePermission,
 } from 'copy-image-clipboard';
-// import { peeps } from './data/Peeps';
-import { randomWord } from './functions/index';
+// import { randomWord } from './functions/index';
 import { checkWord } from './functions/index';
-import { startOver } from './functions/StartOver';
-import { getPeeps } from './firestore/index';
+import { startGame } from './functions/StartGame';
 import logo from './assets/pwLogo.png';
 import styles from './App.module.scss';
 
@@ -21,6 +20,7 @@ export const UserContext = createContext();
 function App() {
   const [answer, setAnswer] = useState('');
   const [guessIndex, setGuessIndex] = useState(0);
+  // const [hardMode, setHardMode] = useState(false);
   const [guesses, setGuesses] = useState([
     ['', '', '', '', ''],
     ['', '', '', '', ''],
@@ -29,6 +29,38 @@ function App() {
     ['', '', '', '', ''],
     ['', '', '', '', ''],
   ]);
+  const [squares, setSquares] = useState({
+    r1L1: '',
+    r1L2: '',
+    r1L3: '',
+    r1L4: '',
+    r1L5: '',
+    r2L1: '',
+    r2L2: '',
+    r2L3: '',
+    r2L4: '',
+    r2L5: '',
+    r3L1: '',
+    r3L2: '',
+    r3L3: '',
+    r3L4: '',
+    r3L5: '',
+    r4L1: '',
+    r4L2: '',
+    r4L3: '',
+    r4L4: '',
+    r4L5: '',
+    r5L1: '',
+    r5L2: '',
+    r5L3: '',
+    r5L4: '',
+    r5L5: '',
+    r6L1: '',
+    r6L2: '',
+    r6L3: '',
+    r6L4: '',
+    r6L5: '',
+  });
   const [userModalShow, setUserModalShow] = useState(true);
   const [endModalShow, setEndModalShow] = useState(false);
   const [peep, setPeep] = useState({});
@@ -38,7 +70,7 @@ function App() {
   const [playingDaily, setPlayingDaily] = useState(false);
 
   const newGame = () => {
-    startOver(setAnswer, setGuesses, setGuessIndex, setEndModalShow);
+    startGame(setAnswer, setGuesses, setGuessIndex, setEndModalShow);
   };
 
   const makeGuess = (playerGuess) => {
@@ -51,25 +83,27 @@ function App() {
       setEndModalShow,
       peep: peep.name,
       guesses,
+      squares,
+      setSquares,
       canWrite,
       shareableImage,
       setShareableImage,
       playingDaily,
+      // hardMode,
     };
-    switch (guessLength) {
-      case 5:
-        checkWord(params);
-        break;
-      default:
-        $(`.shakeableG${guessIndex}`).addClass('shake');
+    if (guessLength === 5) {
+      checkWord(params);
+    } else {
+      $(`.shakeableG${guessIndex}`).addClass('shake');
     }
   };
 
+  // const toggleHardMode = () => {
+  //   setHardMode(!hardMode);
+  // };
+
   useEffect(() => {
-    const secretWord = randomWord();
-    const wordle = secretWord.toUpperCase();
-    setAnswer(wordle);
-    console.log(wordle);
+    startGame(setAnswer, setGuesses, setGuessIndex, setEndModalShow);
     const canCopy = canCopyImagesToClipboard();
     let writePermission = false;
     requestClipboardWritePermission()
@@ -110,6 +144,19 @@ function App() {
         <div className={styles.header}>
           <img src={logo} className={styles.logo} alt="logo" />
           <h3>Peeps Wordle</h3>
+          <div className={styles.hardMode}>
+            {/* <Form>
+              <Form.Check
+                type="switch"
+                variant="danger"
+                id="hardMode"
+                checked={hardMode}
+                onChange={() => toggleHardMode()}
+                label="Hard Mode"
+                disabled={guesses[0][0] === '' ? false : true}
+              ></Form.Check>
+            </Form> */}
+          </div>
         </div>
         <GameBoard
           guesses={guesses}

@@ -60,11 +60,12 @@
   border-radius: 20px;
 }
 .gotDiv {
-  display: flex;
+  /* display: flex;
   width: 100%;
   flex-direction: row;
   justify-content: space-between;
-  flex-wrap: wrap;
+  flex-wrap: wrap; */
+  text-align: justify;
 }
 .gotDiv > span {
   margin-right: 0.5em;

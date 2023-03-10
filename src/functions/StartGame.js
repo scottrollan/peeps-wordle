@@ -1,7 +1,7 @@
 import $ from 'jquery';
-import { words } from '../data/Words';
+import { regularPlay } from '../firestore/index';
 
-export const startOver = (
+export const startGame = async (
   setAnswer,
   setGuesses,
   setGuessIndex,
@@ -20,11 +20,9 @@ export const startOver = (
     ['', '', '', '', ''],
     ['', '', '', '', ''],
   ]);
-  const maxIdx = words.length - 1;
-  const wordIndex = Math.floor(Math.random() * maxIdx);
-  const secretWord = words[wordIndex];
+  const secretWord = await regularPlay();
   const wordle = secretWord.toUpperCase();
-  setAnswer(wordle);
   console.log(wordle);
+  setAnswer(wordle);
   setGuessIndex(0);
 };

@@ -6,13 +6,6 @@
   text-align: center;
 }
 
-.fireworks {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  overflow: hidden;
-}
 .header {
   width: 100%;
   max-width: 550px;
@@ -22,7 +15,12 @@
   align-items: center;
   margin-bottom: 2vh;
   border-bottom: 2px solid black;
-  pointer-events: none;
+  // pointer-events: none;
+  position: relative;
+}
+.hardMode {
+  position: absolute;
+  right: 0;
 }
 
 .logo {

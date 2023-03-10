@@ -4,13 +4,10 @@ import {
   collection,
   getDoc,
   getDocs,
-  query,
-  onSnapshot,
   doc,
   setDoc,
   increment,
   updateDoc,
-  Timestamp,
   DocumentSnapshot,
 } from 'firebase/firestore';
 
@@ -65,7 +62,7 @@ export const dailyWord = async (peep) => {
   querySnapshot.forEach((doc) => {
     words.push(doc.data());
   });
-  //determine wheter another use has already initiated the word for today
+  //determine wheter another user has already initiated the word for today
   let wordObj = words.find((w) => w.last_used === today);
   if (wordObj) {
     selectedWord = {
@@ -92,7 +89,22 @@ export const dailyWord = async (peep) => {
   return selectedWord;
 };
 
-////////////////////////////////////////////////
+export const regularPlay = async () => {
+  let words = [];
+  let selectedWord;
+  const querySnapshot = await getDocs(collection(db, 'dailyWords'));
+  querySnapshot.forEach((doc) => {
+    const wordData = doc.data();
+    selectedWord = wordData.word;
+    words.push(selectedWord);
+  });
+  const maxIdx = words.length - 1;
+  const wordIndex = Math.floor(Math.random() * maxIdx);
+  selectedWord = words[wordIndex];
+  return selectedWord;
+};
+
+////////////Not Yet In Use///////////////
 export const addAPeep = async (data) => {
   await setDoc(doc(db, 'peeps', data.name), {
     name: data.name,

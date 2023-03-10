@@ -76,7 +76,6 @@ export default function Keyboard({
     } else if (code === 'Enter' && currentGuess.length === 5) {
       const myGuess = currentGuess.join('');
       makeGuess(myGuess);
-      console.log(`My guess is: ${myGuess}`);
     } else {
       const firstEmptyIndex = currentGuess.findIndex((ltr) => ltr === '');
       currentGuess[firstEmptyIndex] = target.value.toUpperCase();

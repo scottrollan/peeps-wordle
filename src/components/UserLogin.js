@@ -204,10 +204,11 @@ export default function UserLogin({
             drop="start"
             className={styles.whichPeepButton}
           >
-            {peeps.map((p) => {
+            {peeps.map((p, i) => {
+              const keyName = `${p.name}${i}`;
               return (
                 <Dropdown.Item
-                  key={p.name}
+                  key={keyName}
                   eventKey={p.name}
                   value={p.name}
                   onClick={() => setMyName(p)}
