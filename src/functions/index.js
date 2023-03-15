@@ -1,5 +1,6 @@
 import html2canvas from 'html2canvas';
 import { copyImageToClipboard } from 'copy-image-clipboard';
+import { peepWon, peepLost } from '../firestore/index';
 import $ from 'jquery';
 // import { words } from '../data/Words';
 
@@ -14,9 +15,16 @@ var year = n.getUTCFullYear();
 const todaysDate = `${month}/${day}/${year}`;
 
 const populateEndModal = (params, iWon) => {
-  const { peep, answer, guessIndex, guesses, setShareableImage, playingDaily } =
-    params;
-
+  const {
+    peep,
+    answer,
+    guessIndex,
+    guesses,
+    setShareableImage,
+    playingDaily,
+    setIWon,
+  } = params;
+  setIWon(iWon);
   switch (true) {
     case iWon && playingDaily:
       $('#shareDiv').append(
@@ -65,7 +73,7 @@ const populateEndModal = (params, iWon) => {
     setShareableImage(imageSrc);
     $('#shareDiv').hide();
     $('#imageContainer').append(
-      `<img src=${imageSrc} alt='nothing to see' id='shareMe' style="max-width: 50vw;"/>`
+      `<img src=${imageSrc} alt='nothing to see' id='shareMe' style="max-width: 200px;"/>`
     );
   });
 };
@@ -92,6 +100,7 @@ const youWin = (params) => {
     $('#tooltip').css('display', 'none');
     populateEndModal(params, true);
   }, 2000);
+  peepWon(params.peep, params.guessIndex);
 };
 
 const youLose = (params) => {
@@ -102,6 +111,7 @@ const youLose = (params) => {
     $('#tooltip').css('display', 'none');
     populateEndModal(params, false);
   }, 2000);
+  peepLost(params.peep);
 };
 
 const vannaWhite = (params, isWinner, isLoser) => {

@@ -1,0 +1,50 @@
+@import '../styles/custom-properties.module.scss';
+
+.wonLost {
+  color: var(--purple);
+}
+.summaryLine {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.stat {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  justify-content: center;
+  text-align: center;
+}
+.statNumber {
+  font-size: large;
+  font-weight: 700;
+}
+.distributionDiv {
+  margin-top: 0.5em;
+}
+.barLine {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.25em;
+}
+
+.label {
+  width: 5%;
+}
+
+.barWrapper {
+  width: 95%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.bar {
+  height: 100%;
+  background-color: gray;
+  width: 50%;
+  text-align: right;
+  padding-right: 0.25em;
+  color: white;
+}

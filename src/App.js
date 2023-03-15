@@ -1,15 +1,15 @@
 import React, { useState, useEffect, createContext } from 'react';
-// import { Form } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import Div100vh from 'react-div-100vh';
 import UserLogin from './components/UserLogin';
 import GameBoard from './components/GameBoard';
 import EndOfGame from './components/EndOfGame';
+import Stats from './components/Stats';
 import $ from 'jquery';
 import {
   canCopyImagesToClipboard,
   requestClipboardWritePermission,
 } from 'copy-image-clipboard';
-// import { randomWord } from './functions/index';
 import { checkWord } from './functions/index';
 import { startGame } from './functions/StartGame';
 import logo from './assets/pwLogo.png';
@@ -63,14 +63,16 @@ function App() {
   });
   const [userModalShow, setUserModalShow] = useState(true);
   const [endModalShow, setEndModalShow] = useState(false);
+  const [showStats, setShowStats] = useState(false);
   const [peep, setPeep] = useState({});
   const [peeps, setPeeps] = useState([]);
   const [canWrite, setCanWrite] = useState(false);
   const [shareableImage, setShareableImage] = useState();
   const [playingDaily, setPlayingDaily] = useState(false);
+  const [iWon, setIWon] = useState(false);
 
   const newGame = () => {
-    startGame(setAnswer, setGuesses, setGuessIndex, setEndModalShow);
+    startGame(peep, setAnswer, setGuesses, setGuessIndex, setEndModalShow);
   };
 
   const makeGuess = (playerGuess) => {
@@ -89,6 +91,7 @@ function App() {
       shareableImage,
       setShareableImage,
       playingDaily,
+      setIWon,
       // hardMode,
     };
     if (guessLength === 5) {
@@ -98,12 +101,17 @@ function App() {
     }
   };
 
+  const openStatsModal = () => {
+    $('#statsModal').load(window.location.href + ' #statsModal');
+    setShowStats(true);
+  };
+
   // const toggleHardMode = () => {
   //   setHardMode(!hardMode);
   // };
 
   useEffect(() => {
-    startGame(setAnswer, setGuesses, setGuessIndex, setEndModalShow);
+    // startGame(peep, setAnswer, setGuesses, setGuessIndex, setEndModalShow);
     const canCopy = canCopyImagesToClipboard();
     let writePermission = false;
     requestClipboardWritePermission()
@@ -120,14 +128,18 @@ function App() {
   return (
     <Div100vh className={styles.app}>
       <UserContext.Provider value={peep}>
+        <Stats me={peep} show={showStats} setShow={setShowStats} />
         <UserLogin
           show={userModalShow}
           setShow={setUserModalShow}
-          peeps={peeps}
           setPeep={setPeep}
+          peeps={peeps}
           setPeeps={setPeeps}
           setAnswer={setAnswer}
           setPlayingDaily={setPlayingDaily}
+          setGuesses={setGuesses}
+          setGuessIndex={setGuessIndex}
+          setEndModalShow={setEndModalShow}
         />
         <EndOfGame
           show={endModalShow}
@@ -140,6 +152,7 @@ function App() {
           shareableImage={shareableImage}
           playingDaily={playingDaily}
           setPlayingDaily={setPlayingDaily}
+          iWon={iWon}
         />
         <div className={styles.header}>
           <img src={logo} className={styles.logo} alt="logo" />
@@ -156,6 +169,10 @@ function App() {
                 disabled={guesses[0][0] === '' ? false : true}
               ></Form.Check>
             </Form> */}
+            <i
+              className={`fa-solid fa-chart-simple ${styles.statsButton}`}
+              onClick={() => openStatsModal()}
+            ></i>
           </div>
         </div>
         <GameBoard

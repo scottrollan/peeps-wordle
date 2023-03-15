@@ -43,12 +43,45 @@ export const getPeeps = async () => {
   return peeps;
 };
 
-export const peepPeepedIn = async (peep) => {
-  await updateDoc(doc(db, 'peeps', peep), {
-    peeped_in: increment(1),
-    games_forfeited: increment(1),
+export const peepStartedGame = async (peep) => {
+  updateDoc(doc(db, 'peeps', peep), {
+    regular_games_played: increment(1),
   });
 };
+
+export const peepWon = async (peep, guesses) => {
+  const guessNum = guesses + 1;
+  const wonIn = `games_won_in_${guessNum}`;
+  const gameWon = {
+    games_played: increment(1),
+    games_won: increment(1),
+    [wonIn]: increment(1),
+    most_recent_guess_number: guessNum,
+  };
+  await updateDoc(doc(db, 'peeps', peep), gameWon);
+};
+
+export const peepLost = async (peep) => {
+  const gameWon = {
+    games_played: increment(1),
+    games_lost: increment(1),
+  };
+  await updateDoc(doc(db, 'peeps', peep), gameWon);
+};
+
+// export const peepPeepedIn = async (peep, iWon, guesses) => {
+//   const wonIn = `games_won_in_${guesses}`;
+//   const gameWon = iWon
+//     ? {
+//         games_won: increment(1),
+//         [wonIn]: increment(1),
+//       }
+//     : {
+//         games_lost: increment(1),
+//       };
+
+//   await updateDoc(doc(db, 'peeps', peep), gameWon);
+// };
 
 export const dailyWord = async (peep) => {
   let t = new Date();
@@ -111,7 +144,6 @@ export const addAPeep = async (data) => {
     games_played: 0,
     games_won: 0,
     games_lost: 0,
-    games_forfeited: 0,
     daily_game_guesses: [],
   });
   console.log(`${data.name} added successully!`);

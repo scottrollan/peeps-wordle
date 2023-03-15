@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../App';
-import { peepPeepedIn, dailyWord, getPeeps } from '../firestore/index';
+import { dailyWord, getPeeps } from '../firestore/index';
+import { startGame } from '../functions/StartGame';
 import { Modal, DropdownButton, Dropdown, Button } from 'react-bootstrap';
 import styles from './UserLogin.module.scss';
 
@@ -9,31 +10,31 @@ export default function UserLogin({
   setShow,
   setPeep,
   peeps,
-  setAnswer,
   setPeeps,
+  setAnswer,
   setPlayingDaily,
+  setGuesses,
+  setGuessIndex,
+  setEndModalShow,
 }) {
   const [playedDailyAlready, setPlayedDailyAlready] = useState(false);
   const peep = useContext(UserContext);
   const t = new Date();
-  const today = parseInt(t.setHours(0, 0, 0, 0));
+  const today = t.setHours(0, 0, 0, 0);
 
   const userTrue = () => {
     setShow(false);
+    startGame(peep, setAnswer, setGuesses, setGuessIndex, setEndModalShow);
   };
   const setMyName = (p) => {
     setPeep({ ...p });
     setPlayedDailyAlready(p.last_daily_played === today);
-    peepPeepedIn(p.name);
   };
 
   const dailyPuzzle = async () => {
     const wordT = await dailyWord(peep); //currently lowercase
     const wordToday = wordT.word.toUpperCase();
-    console.log(wordToday);
-    const updatedPeep = { ...peep, last_daily_played: today };
-    console.log(`today: ${today}`);
-    console.log(`updatedPeep: ${JSON.stringify(updatedPeep)}`);
+    console.log(`The Daily Peep is: ${wordToday}`);
     if (peep.last_daily_played === today) {
       setPlayedDailyAlready(true);
     }

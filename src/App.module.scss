@@ -23,6 +23,11 @@
   right: 0;
 }
 
+.statsButton:hover {
+  color: gray;
+  transform: scale(1.2);
+}
+
 .logo {
   pointer-events: none;
   height: 5vh;

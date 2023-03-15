@@ -1,8 +1,7 @@
 import React, { useContext } from 'react';
-import { UserContext } from '../App';
 import { Modal, Button } from 'react-bootstrap';
 import { shareResults } from '../functions/index';
-import { peepPeepedIn } from '../firestore/index';
+// import { peepPeepedIn } from '../firestore/index';
 import './EndOfGame.css';
 
 export default function EndOfGame(props) {
@@ -10,7 +9,6 @@ export default function EndOfGame(props) {
     show,
     setShow,
     answer,
-    guessIndex,
     newGame,
     canWrite,
     shareableImage,
@@ -18,10 +16,7 @@ export default function EndOfGame(props) {
     setPlayingDaily,
   } = props;
 
-  const peep = useContext(UserContext);
-
   const startNewGame = () => {
-    peepPeepedIn(peep.name);
     if (playingDaily) {
       setPlayingDaily(false);
     }

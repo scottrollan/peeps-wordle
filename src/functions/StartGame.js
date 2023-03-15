@@ -1,7 +1,8 @@
 import $ from 'jquery';
-import { regularPlay } from '../firestore/index';
+import { regularPlay, peepStartedGame } from '../firestore/index';
 
 export const startGame = async (
+  peep,
   setAnswer,
   setGuesses,
   setGuessIndex,
@@ -25,4 +26,5 @@ export const startGame = async (
   console.log(wordle);
   setAnswer(wordle);
   setGuessIndex(0);
+  peepStartedGame(peep.name);
 };
