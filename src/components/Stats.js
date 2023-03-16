@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
-import { collection, query, where, onSnapshot } from 'firebase/firestore';
+import { collection, query, onSnapshot } from 'firebase/firestore';
 import { db } from '../firestore/index';
 import styles from './Stats.module.scss';
 

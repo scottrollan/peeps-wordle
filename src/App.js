@@ -1,10 +1,11 @@
 import React, { useState, useEffect, createContext } from 'react';
-import { Button } from 'react-bootstrap';
 import Div100vh from 'react-div-100vh';
+import { Form } from 'react-bootstrap';
 import UserLogin from './components/UserLogin';
 import GameBoard from './components/GameBoard';
 import EndOfGame from './components/EndOfGame';
 import Stats from './components/Stats';
+import Opt from './components/Opt';
 import $ from 'jquery';
 import {
   canCopyImagesToClipboard,
@@ -20,7 +21,7 @@ export const UserContext = createContext();
 function App() {
   const [answer, setAnswer] = useState('');
   const [guessIndex, setGuessIndex] = useState(0);
-  // const [hardMode, setHardMode] = useState(false);
+  const [hardMode, setHardMode] = useState(false);
   const [guesses, setGuesses] = useState([
     ['', '', '', '', ''],
     ['', '', '', '', ''],
@@ -64,6 +65,7 @@ function App() {
   const [userModalShow, setUserModalShow] = useState(true);
   const [endModalShow, setEndModalShow] = useState(false);
   const [showStats, setShowStats] = useState(false);
+  const [showOpt, setShowOpt] = useState(false);
   const [peep, setPeep] = useState({});
   const [peeps, setPeeps] = useState([]);
   const [canWrite, setCanWrite] = useState(false);
@@ -105,10 +107,13 @@ function App() {
     $('#statsModal').load(window.location.href + ' #statsModal');
     setShowStats(true);
   };
+  const openOptModal = () => {
+    setShowOpt(true);
+  };
 
-  // const toggleHardMode = () => {
-  //   setHardMode(!hardMode);
-  // };
+  const toggleHardMode = () => {
+    setHardMode(!hardMode);
+  };
 
   useEffect(() => {
     // startGame(peep, setAnswer, setGuesses, setGuessIndex, setEndModalShow);
@@ -129,6 +134,12 @@ function App() {
     <Div100vh className={styles.app}>
       <UserContext.Provider value={peep}>
         <Stats me={peep} show={showStats} setShow={setShowStats} />
+        <Opt
+          show={showOpt}
+          setShow={setShowOpt}
+          hardMode={hardMode}
+          setHardMode={setHardMode}
+        />
         <UserLogin
           show={userModalShow}
           setShow={setUserModalShow}
@@ -157,18 +168,12 @@ function App() {
         <div className={styles.header}>
           <img src={logo} className={styles.logo} alt="logo" />
           <h3>Peeps Wordle</h3>
-          <div className={styles.hardMode}>
-            {/* <Form>
-              <Form.Check
-                type="switch"
-                variant="danger"
-                id="hardMode"
-                checked={hardMode}
-                onChange={() => toggleHardMode()}
-                label="Hard Mode"
-                disabled={guesses[0][0] === '' ? false : true}
-              ></Form.Check>
-            </Form> */}
+          <div className={styles.options}>
+            <i
+              className={`${styles.optButton} fa-solid fa-gear`}
+              onClick={() => openOptModal()}
+            ></i>
+
             <i
               className={`fa-solid fa-chart-simple ${styles.statsButton}`}
               onClick={() => openStatsModal()}

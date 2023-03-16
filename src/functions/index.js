@@ -170,7 +170,6 @@ const isNotAWord = (params) => {
 const isAWord = (params) => {
   const guessIndex = params.guessIndex;
   let thisRow = {};
-  let newSquares;
   for (let i = 1; i <= 5; i++) {
     let sq = `r${guessIndex + 1}L${i}`;
     thisRow = { ...thisRow, [sq]: 'dark' };
@@ -221,7 +220,7 @@ const isAWord = (params) => {
         }
       }
     }
-    newSquares = { ...params.squares, ...thisRow };
+    // newSquares = { ...params.squares, ...thisRow };
     params.setSquares({ ...params.squares, ...thisRow });
   });
 

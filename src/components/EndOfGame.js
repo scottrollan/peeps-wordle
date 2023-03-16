@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { shareResults } from '../functions/index';
 // import { peepPeepedIn } from '../firestore/index';

@@ -18,12 +18,16 @@
   // pointer-events: none;
   position: relative;
 }
-.hardMode {
+.options {
   position: absolute;
   right: 0;
+  width: 25%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
 }
 
-.statsButton:hover {
+.statsButton:hover, .optButton:hover {
   color: gray;
   transform: scale(1.2);
 }
