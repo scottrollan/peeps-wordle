@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { collection, query, onSnapshot } from 'firebase/firestore';
 import { db } from '../firestore/index';
+import $ from 'jquery';
 import styles from './Stats.module.scss';
 
 export default function Stats(props) {
-  const { me, show, setShow } = props;
+  const { me } = props;
   const [peep, setPeep] = useState({ ...me });
 
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    $('#modalView').hide('fast');
+  };
 
   useEffect(() => {
     const q = query(
@@ -26,12 +29,12 @@ export default function Stats(props) {
   }, []);
 
   return (
-    <>
-      <Modal show={show} onHide={handleClose} id="statsModal">
-        <Modal.Header closeButton>
-          <Modal.Title>{peep.name}'s Stats</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
+    <div className={styles.modalBackdrop} id="modalView">
+      <div className={styles.statsModal} id="statsModal">
+        <div className={styles.statsHeader}>
+          <h3>{peep.name}'s Stats</h3>
+        </div>
+        <div>
           <div className={styles.summaryLine}>
             <div className={styles.stat}>
               <div className={styles.statNumber}>{peep.games_played}</div>
@@ -80,13 +83,13 @@ export default function Stats(props) {
               );
             })}
           </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+        </div>
+        <div className={styles.footer}>
+          <Button variant="secondary" onClick={() => handleClose()}>
             Close
           </Button>
-        </Modal.Footer>
-      </Modal>
-    </>
+        </div>
+      </div>
+    </div>
   );
 }

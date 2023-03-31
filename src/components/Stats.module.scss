@@ -1,5 +1,46 @@
 @import '../styles/custom-properties.module.scss';
 
+.modalBackdrop {
+  position: absolute;
+  // top: 0;
+  // left: 0;
+  // right: 0;
+  bottom: 0;
+  z-index: 2;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: none;
+  justify-content: center;
+}
+.statsModal {
+  width: 100%;
+  max-width: 450px;
+  padding: 1rem 2rem;
+  border: 1px solid black;
+  border-radius: 0.3rem;
+  background-color: white;
+  position: absolute;
+  bottom: 2rem;
+}
+
+.statsHeader {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.statsBody {
+  display: flex;
+  justify-content: flex-start;
+  margin: 1rem;
+}
+
+.statsFooter {
+  display: flex;
+  justify-content: flex-start;
+  margin: 1rem;
+}
+
 .wonLost {
   color: var(--purple);
 }

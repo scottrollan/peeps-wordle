@@ -1,6 +1,6 @@
 import React, { useState, useEffect, createContext } from 'react';
 import Div100vh from 'react-div-100vh';
-import { Form } from 'react-bootstrap';
+// import { Form } from 'react-bootstrap';
 import UserLogin from './components/UserLogin';
 import GameBoard from './components/GameBoard';
 import EndOfGame from './components/EndOfGame';
@@ -64,7 +64,6 @@ function App() {
   });
   const [userModalShow, setUserModalShow] = useState(true);
   const [endModalShow, setEndModalShow] = useState(false);
-  const [showStats, setShowStats] = useState(false);
   const [showOpt, setShowOpt] = useState(false);
   const [peep, setPeep] = useState({});
   const [peeps, setPeeps] = useState([]);
@@ -104,8 +103,8 @@ function App() {
   };
 
   const openStatsModal = () => {
-    $('#statsModal').load(window.location.href + ' #statsModal');
-    setShowStats(true);
+    // $('#modalView').css('display', 'inline-flex').fadeIn('fast');
+    $('#modalView').show('slow');
   };
   const openOptModal = () => {
     setShowOpt(true);
@@ -133,7 +132,7 @@ function App() {
   return (
     <Div100vh className={styles.app}>
       <UserContext.Provider value={peep}>
-        <Stats me={peep} show={showStats} setShow={setShowStats} />
+        <Stats me={peep} />
         <Opt
           show={showOpt}
           setShow={setShowOpt}
