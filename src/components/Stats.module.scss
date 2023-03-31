@@ -27,6 +27,7 @@
 .statsHeader {
   display: flex;
   justify-content: flex-start;
+  border-bottom: 1px solid gray;
 }
 
 .statsBody {
@@ -48,6 +49,8 @@
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  border-bottom: 1px solid gray;
+  padding: 0.5rem;
 }
 .stat {
   display: flex;
@@ -62,6 +65,7 @@
 }
 .distributionDiv {
   margin-top: 0.5em;
+  text-align: left;
 }
 .barLine {
   width: 100%;

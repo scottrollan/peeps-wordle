@@ -104,7 +104,7 @@ function App() {
 
   const openStatsModal = () => {
     // $('#modalView').css('display', 'inline-flex').fadeIn('fast');
-    $('#modalView').show('slow');
+    $('#modalView').show('fast').css('display', 'inline-flex');
   };
   const openOptModal = () => {
     setShowOpt(true);
